@@ -1,6 +1,6 @@
 
 export default interface Pedido {
 	idPedido: number;
-	idCliente: number;
+	nomeCliente: number;
 	preco: number;
 }

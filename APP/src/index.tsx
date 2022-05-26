@@ -7,7 +7,7 @@ ReactDOM.render(
 	<React.StrictMode>
 		<HashRouter>
 			<Routes>
-				<Route path="/" element={<App idpedido={1} />} />
+				<Route path="/" element={<App/>} />
 			</Routes>
 		</HashRouter>
 	</React.StrictMode>,
