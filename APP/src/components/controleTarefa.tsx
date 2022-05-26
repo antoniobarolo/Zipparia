@@ -1,7 +1,4 @@
 import React from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import Tarefa from "../models/cliente";
-import ControleTexto from "./controleTexto";
 
 interface ControleTarefaProps {
 	tarefa: Tarefa,

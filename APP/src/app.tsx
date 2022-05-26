@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import Grupo from "./components/controleTexto";
-import Tarefa from "./models/cliente";
-import ControleTexto from "./components/controleTexto";
-import ControleTarefa from "./components/controleTarefa";
 
 interface AppProps {
 	idpedido: number;
