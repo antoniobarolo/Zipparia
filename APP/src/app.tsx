@@ -5,14 +5,7 @@ function App() {
 
 	return (
 		<div>
-			<h1>Zipparia</h1>
-			<div className="formLogin">
-				<label htmlFor="">Login</label>
-				<input type="text"/>
-				<label htmlFor="">Senha</label>
-				<input type="text"/>
-				<button>Entrar</button>
-			</div>
+			
 		</div>
 	);
 }
