@@ -32,30 +32,22 @@ class PedidoApiRoute {
             res.json(pedido);
         }
     }
-    async obterPizzasDoPedido(req, res) {
-        let erro = null;
-        let id = parseInt(req.params["id"]);
-        let pizzas;
-        if (!id) {
-            erro = "ID inválido";
-        }
-        else {
-            pizzas = await Pedido.obterPizzasDoPedido(id);
-            if (!pizzas) {
-                erro = "Pedido não encontrado!";
-            }
-        }
-        if (erro) {
-            res.status(400).json(erro);
-        }
-        else {
-            res.json(pizzas);
-        }
-    }
     async criar(req, res) {
         let erro = null;
         let pedido = req.body;
         erro = await Pedido.criar(pedido);
+        if (erro) {
+            res.status(400).json(erro);
+        }
+        else {
+            res.json(true);
+        }
+    }
+    async criarPizzaNoPedido(req, res) {
+        let erro = null;
+        let idPedido = parseInt(req.params["idPedido"]);
+        let idPizza = parseInt(req.params["idPizza"]);
+        erro = await Pedido.criarPizzaNoPedido(idPedido, idPizza);
         if (erro) {
             res.status(400).json(erro);
         }
@@ -84,11 +76,11 @@ __decorate([
     app.route.methodName("/obter/:id")
 ], PedidoApiRoute.prototype, "obter", null);
 __decorate([
-    app.route.methodName("/obterPizzasDoPedido/:id")
-], PedidoApiRoute.prototype, "obterPizzasDoPedido", null);
-__decorate([
     app.http.post()
 ], PedidoApiRoute.prototype, "criar", null);
+__decorate([
+    app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza")
+], PedidoApiRoute.prototype, "criarPizzaNoPedido", null);
 __decorate([
     app.route.methodName("/excluir/:id")
 ], PedidoApiRoute.prototype, "excluir", null);

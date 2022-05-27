@@ -11,7 +11,7 @@ class Pizza {
     static async obter(id) {
         let lista = null;
         await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select idPizza, Nome, Descricao, Preco from Pizza where id = ?", [id,]));
+            lista = (await sql.query("select idPizza, Nome, Descricao, Preco from Pizza where idPizza = ?", [id]));
         });
         return (lista && lista[0]) || null;
     }
@@ -21,7 +21,7 @@ class Pizza {
             return erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Pizza (Nome, Descricao, Preco) values (?,?)", [p.Nome, p.Preco]);
+                await sql.query("insert into Pizza (Nome, Descricao, Preco) values (?,?,?)", [p.Nome, p.Descricao, p.Preco]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -60,7 +60,7 @@ class Pizza {
     static async excluir(id) {
         let erro = null;
         await app.sql.connect(async (sql) => {
-            await sql.query("delete from Pizza where id = ?", [id]);
+            await sql.query("delete from Pizza where idPizza = ?", [id]);
             if (!sql.affectedRows)
                 erro = "Pizza não encontrada";
         });

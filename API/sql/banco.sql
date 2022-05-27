@@ -3,26 +3,14 @@ DROP SCHEMA IF EXISTS `Pizza` ;
 CREATE SCHEMA IF NOT EXISTS `Pizza` DEFAULT CHARACTER SET utf8 ;
 USE `Pizza` ;
 
-DROP TABLE IF EXISTS `Pizza`.`Cliente` ;
-
-CREATE TABLE IF NOT EXISTS `Pizza`.`Cliente` (
-  `idCliente` INT NOT NULL AUTO_INCREMENT,
-  `Nome` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idCliente`));
-
 DROP TABLE IF EXISTS `Pizza`.`Pedido` ;
 
 CREATE TABLE IF NOT EXISTS `Pizza`.`Pedido` (
   `idPedido` INT NOT NULL AUTO_INCREMENT,
-  `idCliente` INT NOT NULL,
+  `NomeCliente` VARCHAR(30) NOT NULL,
   `Preco` INT NOT NULL,
-  PRIMARY KEY (`idPedido`),
-  INDEX `FK_Pedido_IdCliente_idx` (`idCliente` ASC) VISIBLE,
-  CONSTRAINT `FK_Pedido_IdCliente`
-    FOREIGN KEY (`idCliente`)
-    REFERENCES `Pizza`.`Cliente` (`idCliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+  PRIMARY KEY (`idPedido`)
+ );
 
 DROP TABLE IF EXISTS `Pizza`.`Pizza` ;
 

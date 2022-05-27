@@ -11,12 +11,6 @@ app.run({
         if (req.path.indexOf("/api/") >= 0) {
             res.json(err.status == 404 ? "Não encontrado" : (err.message || err.toString()));
         }
-        else if (err.status == 404) {
-            res.render("shared/erro", { layout: "layout-externo" });
-        }
-        else {
-            res.render("shared/erro", { layout: "layout-externo", mensagem: err.message, erro: err });
-        }
     }
 });
 //# sourceMappingURL=app.js.map

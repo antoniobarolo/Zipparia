@@ -4,23 +4,16 @@ class Pedido {
     static async listar() {
         let lista = null;
         await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select idPedido, idCliente, Preco from Pedido order by idPedido asc"));
+            lista = (await sql.query("select idPedido, NomeCliente, Preco from Pedido order by idPedido asc"));
         });
         return lista || [];
     }
-    static async obterPizzasDoPedido(idPedido) {
+    static async obter(idPedido) {
         let lista = null;
         await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select p.idPizza, p.Nome, p.Descricao, p.Preco from Rel_Pizza_Pedido r INNER JOIN Pizza p on r.idPizza = p.idPizza where r.idPedido = ?", [idPedido]));
+            lista = (await sql.query("select pe.NomeCliente, p.idPizza, p.Nome, p.Descricao, p.Preco from Rel_Pizza_Pedido r INNER JOIN Pizza p on r.idPizza = p.idPizza INNER JOIN Pedido pe on r.idPedido = pe.idPedido where r.idPedido = ?", [idPedido]));
         });
         return (lista) || null;
-    }
-    static async obter(id) {
-        let lista = null;
-        await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select p.idPedido, p.idCliente, p.Preco from Pedido p INNER JOIN Cliente c on p.idCliente = c.idCliente where idCliente = ?", [id,]));
-        });
-        return (lista && lista[0]) || null;
     }
     static async criar(p) {
         let erro;
@@ -28,7 +21,7 @@ class Pedido {
             return erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Pedido (idCliente, Preco) values (?,?)", [p.idCliente, p.Preco]);
+                await sql.query("insert into Pedido (NomeCliente, Preco) values (?,?)", [p.NomeCliente, p.Preco]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -49,6 +42,21 @@ class Pedido {
             await sql.query("delete from Pedido where id = ?", [id]);
             if (!sql.affectedRows)
                 erro = "Pedido não encontrada";
+        });
+        return erro;
+    }
+    static async criarPizzaNoPedido(idPedido, idPizza) {
+        let erro;
+        await app.sql.connect(async (sql) => {
+            try {
+                await sql.query("insert into Rel_Pizza_Pedido (idPedido, idPizza) values (?,?)", [idPedido, idPizza]);
+            }
+            catch (e) {
+                if (e.cod && e.code === "ER_DUP_ENTRY")
+                    erro = `A Pedido já existe`;
+                else
+                    throw e;
+            }
         });
         return erro;
     }

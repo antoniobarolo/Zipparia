@@ -16,8 +16,8 @@ class PedidoApiRoute {
 
       let id = parseInt(req.params["id"]);
 
-      let pedido: Pedido = null;
-
+      let pedido: Pedido[] = null;
+    
       if (!id) {
           erro = "ID inválido";
       } else {
@@ -35,31 +35,6 @@ class PedidoApiRoute {
       }
   }
 
-  @app.route.methodName("/obterPizzasDoPedido/:id")
-  public async obterPizzasDoPedido(req: app.Request, res: app.Response) {
-      let erro: string = null;
-
-      let id = parseInt(req.params["id"]);
-
-      let pizzas: Pizza[] ;
-
-      if (!id) {
-          erro = "ID inválido";
-      } else {
-          pizzas = await Pedido.obterPizzasDoPedido(id);
-
-          if (!pizzas) {
-              erro = "Pedido não encontrado!";
-          }
-      }
-
-      if (erro) {
-          res.status(400).json(erro);
-      } else {
-          res.json(pizzas);
-      }
-  }
-
   @app.http.post()
   public async criar(req: app.Request, res: app.Response) {
       let erro: string = null;
@@ -67,6 +42,22 @@ class PedidoApiRoute {
       let pedido = req.body as Pedido;
 
       erro = await Pedido.criar(pedido);
+
+      if(erro){
+          res.status(400).json(erro);
+      }else{
+          res.json(true);
+      }
+  }
+
+  @app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza")
+  public async criarPizzaNoPedido(req: app.Request, res: app.Response) {
+      let erro: string = null;
+
+      let idPedido = parseInt(req.params["idPedido"]);
+      let idPizza = parseInt(req.params["idPizza"]);
+
+      erro = await Pedido.criarPizzaNoPedido(idPedido, idPizza);
 
       if(erro){
           res.status(400).json(erro);
