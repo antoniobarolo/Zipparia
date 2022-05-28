@@ -3,10 +3,11 @@ import Pedido = require("../../models/Pedido");
 import Pizza = require("../../models/Pizza");
 
 class PedidoApiRoute {
+
   public async listar(req: app.Request, res: app.Response) {
       let lista = await Pedido.listar();
 
-      res.json(lista);
+      res.json(JSON.stringify(lista));
   }
 
   

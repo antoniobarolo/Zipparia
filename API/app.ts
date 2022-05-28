@@ -1,5 +1,6 @@
 ﻿import app = require("teem");
 import appsettings = require("./appsettings");
+const cors = require('cors');
 
 app.run({
 	root: appsettings.root,
@@ -11,5 +12,8 @@ app.run({
 		if (req.path.indexOf("/api/") >= 0) {
 			res.json(err.status == 404 ? "Não encontrado" : (err.message || err.toString()));
 		} 
-    }
+    },
+	onInit: function () {
+		app.express.use(cors());
+	}
 });

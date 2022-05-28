@@ -10,7 +10,7 @@ const Pedido = require("../../models/Pedido");
 class PedidoApiRoute {
     async listar(req, res) {
         let lista = await Pedido.listar();
-        res.json(lista);
+        res.json(JSON.stringify(lista));
     }
     async obter(req, res) {
         let erro = null;
