@@ -1,7 +1,87 @@
-listar()
+window.onload = listar();
 
 async function listar() {
     
     let pedidos = await fetch("http://localhost:3000/api/pedido/listar");
-    console.log(pedidos)
+    let lista = JSON.parse(await pedidos.text());
+    try{
+
+        for (let i = 0; i < lista.length; i++) {
+            let pedido = lista[i];
+            if (!pedido) {
+                continue;
+            }
+            //Gerar HTML
+            console.log(pedido)
+        
+        }
+        
+
+    }    catch (motivoDoErro) {
+
+        alert("Algo saiu errado" + motivoDoErro);
+    }
+}
+
+async function Criar(){
+  
+  
+      try {
+        //const formData = new FormData(document.querySelector('form')) pegar form para criar
+        var pedido = {};
+        formData.forEach((value, key) => pedido[key] = value);
+        console.log(JSON.stringify(pedido))
+
+        let resposta = await fetch("https://academico.espm.br/api/pedido/criar", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(pedido),
+        });
+
+        if (await resposta.ok) {
+            listar();
+            alert("Deu Certo")
+        }
+
+      } catch (motivoDoErro) {
+        alert("Algo saiu errado" + motivoDoErro);
+  
+      }
+  
+}
+
+async function criarPizzaPedido(idPedido, idPizza) {
+
+      try {
+        console.log(id)
+       let resposta = await fetch(`https://academico.espm.br/api/pedido/criarPizzaNoPedido/${idPedido}/${idPizza}`);
+        if (await resposta.ok) {
+         
+        listar()
+          alert("Deu Certo")
+        }
+      }
+      catch (motivoDoErro) {
+        alert("Algo saiu errado" + motivoDoErro);
+  
+      }
+  }
+
+  async function excluirPizzaPedido(idPedido, idPizza) {
+
+    try {
+      console.log(id)
+     let resposta = await fetch(`https://academico.espm.br/api/pedido/excluirPizzaNoPedido/${idPedido}/${idPizza}`);
+      if (await resposta.ok) {
+       
+      listar()
+        alert("Deu Certo")
+      }
+    }
+    catch (motivoDoErro) {
+      alert("Algo saiu errado" + motivoDoErro);
+
+    }
 }

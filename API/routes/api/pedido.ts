@@ -67,6 +67,22 @@ class PedidoApiRoute {
       }
   }
 
+  @app.route.methodName("/excluirPizzaNoPedido/:idPedido/:idPizza")
+  public async excluirPizzaNoPedido(req: app.Request, res: app.Response) {
+      let erro: string = null;
+
+      let idPedido = parseInt(req.params["idPedido"]);
+      let idPizza = parseInt(req.params["idPizza"]);
+
+      erro = await Pedido.criarPizzaNoPedido(idPedido, idPizza);
+
+      if(erro){
+          res.status(400).json(erro);
+      }else{
+          res.json(true);
+      }
+  }
+
   @app.route.methodName("/excluir/:id")
   public async excluir(req: app.Request, res: app.Response) {
       let erro: string = null;

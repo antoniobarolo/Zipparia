@@ -75,6 +75,22 @@ class Pedido{
 
     return erro;
   }
+
+  public static async excluirPizzaNoPedido(idPedido: number,idPizza: number): Promise<string> {
+    let erro: string;
+
+    await app.sql.connect(async (sql: app.Sql) => {
+      try {
+        await sql.query("delete from Rel_Pizza_Pedido where idPedido = ? and idPizza = ? ", [idPedido, idPizza]);
+      } catch (e) {
+        if (e.cod && e.code === "ER_DUP_ENTRY")
+        erro = `A Pedido já existe`;
+        else throw e;
+      }
+    });
+
+    return erro;
+  }
 }
 
 export = Pedido;
