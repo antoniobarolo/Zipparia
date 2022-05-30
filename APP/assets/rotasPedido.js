@@ -85,3 +85,20 @@ async function criarPizzaPedido(idPedido, idPizza) {
 
     }
 }
+
+async function excluir(idPedido) {
+
+    try {
+      console.log(id)
+     let resposta = await fetch(`https://academico.espm.br/api/pedido/excluir/${idPedido}`);
+      if (await resposta.ok) {
+       
+      listar()
+        alert("Deu Certo")
+      }
+    }
+    catch (motivoDoErro) {
+      alert("Algo saiu errado" + motivoDoErro);
+
+    }
+}
