@@ -3,9 +3,11 @@ import Pizza from "../models/pizza";
 
 interface ItemPizzaProps {
 	pizza: Pizza;
+	adicionavel: boolean;
+	removivel: boolean;
 }
 
-function ItemSecao(props: ItemPizzaProps) {
+function ItemPizza(props: ItemPizzaProps) {
 	function addPizza() {
 
 	}
@@ -15,15 +17,16 @@ function ItemSecao(props: ItemPizzaProps) {
 	}
 
 	return (
-		<div>
+		<div className="itemPizza">
 			<div className="pizzaCabecalho">
-				<h3>{props.pizza.nome}</h3> <span className="preco">{props.pizza.preco}</span>
+				<h3>{props.pizza.nome}</h3> <span className="preco">R${props.pizza.preco}0</span>
 			</div>
 			<p>{props.pizza.descricao}</p>
-			<button onClick={addPizza}>+</button>
-			<button onClick={deletePizza}>x</button>
+			{props.adicionavel ? <button onClick={addPizza}>+</button> : <></>}
+			{props.removivel ? <button onClick={deletePizza}>x</button> : <></>}
+
 		</div>
 	);
 }
 
-export default ItemSecao;
+export default ItemPizza;

@@ -1,34 +1,37 @@
 import React from "react";
 import Pedido from "../models/pedido";
+import { Link } from "react-router-dom";
 
-interface ControlePedidoProps {
+interface ControlePedidosProps {
     pedido: Pedido,
     onChange?: (novopedido: Pedido) => void,
     onDelete?: (pedido: Pedido) => void
 }
 
-function ControlePedido(props: ControlePedidoProps) {
+function ControlePedidos(props: ControlePedidosProps) {
 
     function nomeClienteChange(novoNomeCliente: string) {
         if (props.onChange)
             props.onChange({ ...props.pedido, nomeCliente: novoNomeCliente });
     }
-    
+
     function deletePedido() {
         if (props.onDelete)
             props.onDelete(props.pedido);
     }
 
+    const editString = ("/editPage/"+(props.pedido.idPedido).toString()).toString()
+
     return (
-		<div>
+        <div>
             <div className="pedidoCabecalho">
-				<h3>{props.pedido.nomeCliente}</h3> <span className="preco">{props.pedido.preco}</span>
-			</div>
-			<button onClick={()=>0}>Edit</button>
-			<button onClick={deletePedido}>x</button>
+                <h3>{props.pedido.nomeCliente}</h3> <span className="preco">Preço total: R${props.pedido.preco}0</span>
+            </div>
+            <button> <Link to={editString}>Edit</Link></button>
+            <button onClick={deletePedido}>x</button>
         </div>
-	);
+    );
 
 }
 
-export default ControlePedido;
+export default ControlePedidos;
