@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Rel_Pizza_Pedido` (
   `idRel_Pizza_Pedido` INT NOT NULL AUTO_INCREMENT,
   `idPedido` INT NOT NULL,
   `idPizza` INT NOT NULL,
+  `Quantidade` INT,
   PRIMARY KEY (`idRel_Pizza_Pedido`),
   INDEX `FK_idPedido_idx` (`idPedido` ASC) VISIBLE,
   INDEX `FK_idPizza_idx` (`idPizza` ASC) VISIBLE,

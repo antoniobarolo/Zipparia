@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Pedido from "./models/pedido";
 import ControlePedidos from "./components/controlePedidos";
@@ -29,14 +28,14 @@ function Pedidos() {
 			idPedido: 0,
 			nomeCliente: 'Amante de porra',
 			preco: 200,
-			carrinho: [infospizza[0], infospizza[0], infospizza[1]],
+			carrinho: [{pizza: infospizza[0], qtd: 2}, {pizza: infospizza[1], qtd: 1}],
 			key: 0
 		},
 		{
 			idPedido: 1,
 			nomeCliente: 'Amante de tudo',
 			preco: 290,
-			carrinho: [infospizza[2], infospizza[0], infospizza[1]],
+			carrinho: [{pizza: infospizza[0], qtd: 1}, {pizza: infospizza[1], qtd: 1}, {pizza: infospizza[2], qtd: 4}],
 			key: 1
 		}
 
