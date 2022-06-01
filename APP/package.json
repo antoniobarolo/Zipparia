@@ -1,5 +1,5 @@
 {
-  "name": "projeto",
+  "name": "zipparia",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,9 +7,9 @@
     "build": "webpack",
     "build-prod": "webpack --mode=production"
   },
-  "description": "projeto",
+  "description": "zipparia",
   "author": {
-    "name": "projeto"
+    "name": "zipparia"
   },
   "main": "src/app.js",
   "dependencies": {
