@@ -41,3 +41,47 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Rel_Pizza_Pedido` (
     REFERENCES `Pizza`.`Pizza` (`idPizza`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+
+--A partir daqui é população
+
+INSERT INTO Pizza.Pedido(NomeCliente, Preco)
+VALUES('Jorge da Capadócia',0);
+  
+INSERT INTO Pizza.Pedido(NomeCliente,Preco)
+VALUES('Jimmy Neutron',0);
+  
+INSERT INTO Pizza.Pizza(
+Nome,
+Descricao,
+Preco) VALUES(
+'Pizza ruim',
+'Ela é muito boaaa',
+    10
+  );
+  
+INSERT INTO Pizza.Pizza(
+Nome,
+Descricao,
+Preco) VALUES(
+  'Zippa de .zip',
+	'Sabor comprimido',
+    18
+  );
+  
+INSERT INTO Pizza.Rel_Pizza_Pedido(
+idPedido,
+idPizza,
+Quantidade)
+	VALUES(1,1,3);
+    
+INSERT INTO Pizza.Rel_Pizza_Pedido(
+idPedido,
+idPizza,
+Quantidade)
+	VALUES(2,1,4);
+    
+INSERT INTO Pizza.Rel_Pizza_Pedido(
+idPedido,
+idPizza,
+Quantidade)
+	VALUES(2,2,1)

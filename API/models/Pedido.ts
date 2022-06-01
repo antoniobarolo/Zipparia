@@ -1,12 +1,14 @@
 import app = require("teem");
 import Pizza = require("./Pizza");
+import Rel_Pizza_Pedido = require("./RelPedidoPizza");
 
 class Pedido{
   
   public idPedido: number;
   public NomeCliente: string;
   public Preco: number;
-  public Pizza: Pizza[];
+  public Pizza: Rel_Pizza_Pedido[];
+
   public static async listar(): Promise<Pedido[]> {
     let lista: Pedido[] = null;
     
@@ -19,13 +21,13 @@ class Pedido{
     return lista || [];
   }
 
-  public static async obter(idPedido: number): Promise<Pedido[]> {
-    let lista: Pedido[] = null;
+  public static async obter(idPedido: number): Promise<Pedido> {
+    let pedido: Pedido = null
     await app.sql.connect(async (sql:app.Sql) => {
-      lista = (await sql.query("select pe.NomeCliente, p.idPizza, p.Nome, p.Descricao, p.Preco from Rel_Pizza_Pedido r INNER JOIN Pizza p on r.idPizza = p.idPizza INNER JOIN Pedido pe on r.idPedido = pe.idPedido where r.idPedido = ?", [idPedido])) as Pedido[];
+      pedido = (await sql.query("select pe.NomeCliente, p.idPizza, p.Nome, p.Descricao, p.Preco, pe.Preco, r.Quantidade from Rel_Pizza_Pedido r INNER JOIN Pizza p on r.idPizza = p.idPizza INNER JOIN Pedido pe on r.idPedido = pe.idPedido where r.idPedido = ?", [idPedido])) as unknown as Pedido;
     });
 
-    return (lista) || null;
+    return pedido
   }
 
   public static async criar(p: Pedido): Promise<string> {
@@ -60,12 +62,12 @@ class Pedido{
     return erro;
   }
 
-  public static async criarPizzaNoPedido(idPedido: number,idPizza: number): Promise<string> {
+  public static async criarPizzaNoPedido(Rel_Pizza_Pedido: Rel_Pizza_Pedido): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("insert into Rel_Pizza_Pedido (idPedido, idPizza) values (?,?)", [idPedido, idPizza]);
+        await sql.query("insert into Rel_Pizza_Pedido (idPedido, idPizza, Quantidade) values (?,?,?)", [Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza, Rel_Pizza_Pedido.Quantidade]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;
@@ -76,12 +78,12 @@ class Pedido{
     return erro;
   }
 
-  public static async excluirPizzaNoPedido(idPedido: number,idPizza: number): Promise<string> {
+  public static async excluirPizzaNoPedido(Rel_Pizza_Pedido: Rel_Pizza_Pedido): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("delete from Rel_Pizza_Pedido where idPedido = ? and idPizza = ? ", [idPedido, idPizza]);
+        await sql.query("delete from Rel_Pizza_Pedido where idPedido = ? and idPizza = ? ", [Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;
@@ -91,6 +93,22 @@ class Pedido{
 
     return erro;
   }
+
+  public static async alterarPizzaNoPedido(Rel_Pizza_Pedido: Rel_Pizza_Pedido): Promise<string> {
+    let erro: string;
+
+    await app.sql.connect(async (sql: app.Sql) => {
+      try {
+        await sql.query("alter table Rel_Pizza_Pedido set quantidade = ? where idPedido = ? and idPizza = ?", [Rel_Pizza_Pedido.Quantidade, Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza]);
+      } catch (e) {
+        if (e.cod && e.code === "ER_DUP_ENTRY")
+        erro = `A Pedido já existe`;
+        else throw e;
+      }
+    });
+
+    return erro;
+  } 
 }
 
 export = Pedido;

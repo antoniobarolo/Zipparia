@@ -45,9 +45,19 @@ class PedidoApiRoute {
     }
     async criarPizzaNoPedido(req, res) {
         let erro = null;
-        let idPedido = parseInt(req.params["idPedido"]);
-        let idPizza = parseInt(req.params["idPizza"]);
-        erro = await Pedido.criarPizzaNoPedido(idPedido, idPizza);
+        let pedido = req.body;
+        erro = await Pedido.criarPizzaNoPedido(pedido);
+        if (erro) {
+            res.status(400).json(erro);
+        }
+        else {
+            res.json(true);
+        }
+    }
+    async excluirPizzaNoPedido(req, res) {
+        let erro = null;
+        let pedido = req.body;
+        erro = await Pedido.criarPizzaNoPedido(pedido);
         if (erro) {
             res.status(400).json(erro);
         }
@@ -79,8 +89,11 @@ __decorate([
     app.http.post()
 ], PedidoApiRoute.prototype, "criar", null);
 __decorate([
-    app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza")
+    app.http.post()
 ], PedidoApiRoute.prototype, "criarPizzaNoPedido", null);
+__decorate([
+    app.http.post()
+], PedidoApiRoute.prototype, "excluirPizzaNoPedido", null);
 __decorate([
     app.route.methodName("/excluir/:id")
 ], PedidoApiRoute.prototype, "excluir", null);

@@ -1,6 +1,7 @@
 import app = require("teem");
 import Pedido = require("../../models/Pedido");
 import Pizza = require("../../models/Pizza");
+import Rel_Pizza_Pedido = require("../../models/RelPedidoPizza");
 
 class PedidoApiRoute {
 
@@ -17,7 +18,7 @@ class PedidoApiRoute {
 
       let id = parseInt(req.params["id"]);
 
-      let pedido: Pedido[] = null;
+      let pedido: Pedido = null;
     
       if (!id) {
           erro = "ID inválido";
@@ -51,14 +52,12 @@ class PedidoApiRoute {
       }
   }
 
-  @app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza")
+  @app.http.post()
   public async criarPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
 
-      let idPedido = parseInt(req.params["idPedido"]);
-      let idPizza = parseInt(req.params["idPizza"]);
-
-      erro = await Pedido.criarPizzaNoPedido(idPedido, idPizza);
+      let pedido = req.body as Rel_Pizza_Pedido;
+      erro = await Pedido.criarPizzaNoPedido(pedido);
 
       if(erro){
           res.status(400).json(erro);
@@ -67,14 +66,12 @@ class PedidoApiRoute {
       }
   }
 
-  @app.route.methodName("/excluirPizzaNoPedido/:idPedido/:idPizza")
+  @app.http.post()
   public async excluirPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
 
-      let idPedido = parseInt(req.params["idPedido"]);
-      let idPizza = parseInt(req.params["idPizza"]);
-
-      erro = await Pedido.criarPizzaNoPedido(idPedido, idPizza);
+      let pedido = req.body as Rel_Pizza_Pedido;
+      erro = await Pedido.criarPizzaNoPedido(pedido);
 
       if(erro){
           res.status(400).json(erro);

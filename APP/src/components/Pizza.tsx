@@ -6,7 +6,7 @@ interface PizzaProps {
 	pizza: Pizza
 	adicionavel: boolean
 	removivel: boolean
-	qtd? : number
+	qtd?: number
 }
 
 function Pizza(props: PizzaProps) {
@@ -18,6 +18,10 @@ function Pizza(props: PizzaProps) {
 		//muda o banco, relista as pizza
 	}
 
+	function parseInputValue(id: string) {
+		return parseInt((document.getElementById(id) as HTMLInputElement).value)
+	}
+
 	return (
 		<div className="pizza">
 			<div className="pizzaCabecalho">
@@ -25,11 +29,15 @@ function Pizza(props: PizzaProps) {
 			</div>
 			<p>{props.pizza.descricao}</p>
 
-			{props.adicionavel ? <><button onClick={() => addPizza(1)}>+</button>
-				<input type="number" id="qtdAdd" defaultValue={1} min="1" /></> : <></>}
+			{props.adicionavel ? <>
+				<input type="number" id="qtdAdd" defaultValue={1} min="1" />
+				<button onClick={() => addPizza(parseInputValue('qtdAdd'))}>+</button>
+			</> : <></>}
 
-			{props.removivel ? <><button onClick={() => deletePizza(1)}>x</button>
-				<input type="number" id="qtdDelete" defaultValue={props.qtd} min="1" max={props.qtd}/></> : <></>}
+			{props.removivel ? <>
+				<input type="number" id="qtdDelete" defaultValue={props.qtd} min="1" max={props.qtd} />
+				<button onClick={() => deletePizza(parseInputValue('qtdDelete'))}>x</button>
+			</> : <></>}
 
 		</div>
 	);

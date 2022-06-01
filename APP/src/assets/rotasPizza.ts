@@ -1,21 +1,14 @@
-window.onload = listarPizza
+import Pizza from "../models/pizza";
 
-async function listarPizza() {
-
-    let pizzas = await fetch("http://localhost:3000/api/pizza/listar");
-    let lista = JSON.parse(await pizzas.text());
-
+async function listarPizza(): Promise<Pizza[]> {
     try {
-        for (let i = 0; i < lista.length; i++) {
-            let pizza = lista[i];
-            if (!pizza) {
-                continue;
-            }
-            //Gerar HTML
-            console.log(pizza)
-        }
-    } catch (motivoDoErro) {
+        let pizzas = await fetch("http://localhost:3000/api/pizza/listar");
+        return JSON.parse(await pizzas.text()) as Pizza[]
+    }
 
+    catch (motivoDoErro) {
         alert("Algo saiu errado" + motivoDoErro);
     }
 }
+
+export default listarPizza

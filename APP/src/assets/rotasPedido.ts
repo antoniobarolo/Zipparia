@@ -1,31 +1,26 @@
-window.onload = listarPedido
+import Pedido from "../models/pedido";
 
-async function listarPedido() {
-
-    let pedidos = await fetch("http://localhost:3000/api/pedido/listar");
-    let lista = JSON.parse(await pedidos.text());
-    
+async function listarPedido(): Promise<Pedido[]> {
     try {
-        for (let i = 0; i < lista.length; i++) {
-            let pedido = lista[i];
-            if (!pedido) {
-                continue;
-            }
-            //Gerar HTML
-            console.log(pedido)
-
-        }
-
+        let pedidos = await fetch("http://localhost:3000/api/pedido/listar");
+        return JSON.parse(await pedidos.text()) as Pedido[]
 
     } catch (motivoDoErro) {
+        alert("Algo saiu errado" + motivoDoErro);
+    }
+}
 
+async function obterPedido(id: number): Promise<Pedido> {
+    try {
+        let pedidos = await fetch(`http://localhost:3000/api/pedido/obter/${id}`);
+        return JSON.parse(await pedidos.text()) as Pedido;
+    }
+    catch (motivoDoErro) {
         alert("Algo saiu errado" + motivoDoErro);
     }
 }
 
 async function Criar() {
-
-
     try {
         const formData = new FormData(document.querySelector('form'))
         var pedido = {};
@@ -102,3 +97,6 @@ async function excluir(idPedido) {
 
     }
 }
+
+const _ = {listarPedido, obterPedido}
+export default _
