@@ -27,7 +27,7 @@ export async function criar() {
         formData.forEach((value, key) => pedido[key] = value);
         console.log(JSON.stringify(pedido))
 
-        let resposta = await fetch("https://academico.espm.br/api/pedido/criar", {
+        let resposta = await fetch("http://localhost:3000/api/pedido/criar", {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -47,11 +47,31 @@ export async function criar() {
 
 }
 
-export async function criarPizzaPedido(idPedido, idPizza) {
+export async function criarPizzaPedido(idPedido: number, idPizza: number, qtd: number) {
 
     try {
         console.log('id pedido:' + idPedido + ', id pizza:' + idPizza)
-        let resposta = await fetch(`https://academico.espm.br/api/pedido/criarPizzaNoPedido/${idPedido}/${idPizza}`);
+        let resposta = await fetch(`http://localhost:3000/api/pedido/criarPizzaNoPedido/${idPedido}/${idPizza}/${qtd}`);
+        if (await resposta.ok) {
+
+            listarPedido()
+            alert("Deu Certo")
+        }
+        else{
+            alert('Não poe a mesma pizza não parceiro, põe pelas abas de cima pf🐱‍👤')
+        }
+    }
+    catch (motivoDoErro) {
+        alert("Algo saiu errado" + motivoDoErro);
+
+    }
+}
+
+export async function alterarPizzaPedido(idPedido: number, idPizza: number, qtd: number) {
+debugger
+    try {
+        console.log('id pedido:' + idPedido + ', id pizza:' + idPizza)
+        let resposta = await fetch(`http://localhost:3000/api/pedido/alterarPizzaNoPedido/${idPedido}/${idPizza}/${qtd}`);
         if (await resposta.ok) {
 
             listarPedido()
@@ -64,11 +84,11 @@ export async function criarPizzaPedido(idPedido, idPizza) {
     }
 }
 
-export async function excluirPizzaPedido(idPedido, idPizza) {
+export async function excluirPizzaPedido(idPedido: number, idPizza: number) {
 
     try {
         console.log('id pedido:' + idPedido + ', id pizza:' + idPizza)
-        let resposta = await fetch(`https://academico.espm.br/api/pedido/excluirPizzaNoPedido/${idPedido}/${idPizza}`);
+        let resposta = await fetch(`http://localhost:3000/api/pedido/excluirPizzaNoPedido/${idPedido}/${idPizza}`);
         if (await resposta.ok) {
 
             listarPedido()
@@ -81,11 +101,11 @@ export async function excluirPizzaPedido(idPedido, idPizza) {
     }
 }
 
-export async function excluir(idPedido) {
+export async function excluir(idPedido: number) {
 
     try {
         console.log('id pedido:' + idPedido)
-        let resposta = await fetch(`https://academico.espm.br/api/pedido/excluir/${idPedido}`);
+        let resposta = await fetch(`http://localhost:3000/api/pedido/excluir/${idPedido}`);
         if (await resposta.ok) {
 
             listarPedido()

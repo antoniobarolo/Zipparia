@@ -1,20 +1,26 @@
 import React from "react";
 import Pedido from "../models/pedido";
 import { Link } from "react-router-dom";
+import {excluir} from '../assets/rotasPedido'
+import Pedidos from '../pedidos'
 
-interface CompPedidosProps {
-    pedido: Pedido,
+interface CompPedidoProps {
+    pedido: Pedido
 }
 
-function CompPedidos(props: CompPedidosProps) {
+function CompPedidos(props: CompPedidoProps) {
 
-    function editNomeCliente(novoNomeCliente: string) {
+    async function editNomeCliente(novoNomeCliente: string) {
+        
+        window.location.reload()
     }
 
-    function deletePedido() {
+    async function deletePedido() {
+        await excluir(props.pedido.idPedido)
+        window.location.reload()
     }
 
-    const editLink = ("/editPage/"+(props.pedido.idPedido).toString()).toString()
+    const editLink = ("/editPage/" + (props.pedido.idPedido).toString()).toString()
 
     return (
         <div>

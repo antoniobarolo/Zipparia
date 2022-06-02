@@ -52,12 +52,14 @@ class PedidoApiRoute {
       }
   }
 
-  @app.http.post()
+  @app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza/:qtd")
   public async criarPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
 
-      let pedido = req.body as Item;
-      erro = await Pedido.criarPizzaNoPedido(pedido);
+      let pedido = parseInt(req.params['idPedido'])
+      let pizza = parseInt(req.params['idPizza'])
+      let qtd = parseInt(req.params['qtd'])
+      erro = await Pedido.criarPizzaNoPedido(pedido, pizza, qtd);
 
       if(erro){
           res.status(400).json(erro);
@@ -66,12 +68,30 @@ class PedidoApiRoute {
       }
   }
 
-  @app.http.post()
+  @app.route.methodName("/alterarPizzaNoPedido/:idPedido/:idPizza/:qtd")
+  public async alterarPizzaNoPedido(req: app.Request, res: app.Response) {
+      let erro: string = null;
+
+      let pedido = parseInt(req.params['idPedido'])
+      let pizza = parseInt(req.params['idPizza'])
+      let qtd = parseInt(req.params['qtd'])
+      erro = await Pedido.alterarPizzaNoPedido(pedido, pizza, qtd);
+
+      if(erro){
+          res.status(400).json(erro);
+      }else{
+          res.json(true);
+      }
+  }
+
+
+  @app.route.methodName("/excluirPizzaNoPedido/:idPedido/:idPizza")
   public async excluirPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
 
-      let pedido = req.body as Item;
-      erro = await Pedido.criarPizzaNoPedido(pedido);
+      let pedido = parseInt(req.params['idPedido'])
+      let pizza = parseInt(req.params['idPizza'])
+      erro = await Pedido.excluirPizzaNoPedido(pedido, pizza);
 
       if(erro){
           res.status(400).json(erro);

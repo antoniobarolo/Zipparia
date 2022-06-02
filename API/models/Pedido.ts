@@ -57,19 +57,35 @@ class Pedido{
     let erro: string = null;
 
     await app.sql.connect(async (sql: app.Sql) => {
-      await sql.query("delete from Pedido where id = ?", [id]);
+      await sql.query("delete from Pedido where idPedido = ?", [id]);
       if (!sql.affectedRows) erro = "Pedido não encontrada";
     });
 
     return erro;
   }
 
-  public static async criarPizzaNoPedido(Item: Item): Promise<string> {
+  public static async criarPizzaNoPedido(idPedido: number, idPizza: number, qtd: number): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("insert into Item (idPedido, idPizza, qtd) values (?,?,?)", [Item.idPedido, Item.idPizza, Item.qtd]);
+        await sql.query("insert into Item (idPedido, idPizza, qtd) values (?,?,?)", [idPedido, idPizza, qtd]);
+      } catch (e) {
+        if (e.cod && e.code === "ER_DUP_ENTRY")
+        erro = `A Pizza já existe neste pedido`;
+        else throw e;
+      }
+    });
+
+    return erro;
+  }
+
+  public static async excluirPizzaNoPedido(idPedido: number, idPizza: number): Promise<string> {
+    let erro: string;
+
+    await app.sql.connect(async (sql: app.Sql) => {
+      try {
+        await sql.query("delete from Item where idPedido = ? and idPizza = ? ", [idPedido, idPizza]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;
@@ -80,28 +96,12 @@ class Pedido{
     return erro;
   }
 
-  public static async excluirPizzaNoPedido(Item: Item): Promise<string> {
+  public static async alterarPizzaNoPedido(idPedido: number, idPizza: number, qtd: number): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("delete from Item where idPedido = ? and idPizza = ? ", [Item.idPedido, Item.idPizza]);
-      } catch (e) {
-        if (e.cod && e.code === "ER_DUP_ENTRY")
-        erro = `A Pedido já existe`;
-        else throw e;
-      }
-    });
-
-    return erro;
-  }
-
-  public static async alterarPizzaNoPedido(Item: Item): Promise<string> {
-    let erro: string;
-
-    await app.sql.connect(async (sql: app.Sql) => {
-      try {
-        await sql.query("alter table Item set qtd = ? where idPedido = ? and idPizza = ?", [Item.qtd, Item.idPedido, Item.idPizza]);
+        await sql.query("update Item set qtd = ? where idPedido = ? and idPizza = ?", [qtd, idPedido, idPizza]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;

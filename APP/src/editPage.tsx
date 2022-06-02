@@ -6,7 +6,6 @@ import listarPizza from "./assets/rotasPizza";
 import { obterPedido } from "./assets/rotasPedido";
 import Pedido from "./models/pedido";
 import Pizza from "./models/pizza";
-import Item from "./models/item";
 
 function EditPage() {
 	const params = useParams();
@@ -34,7 +33,7 @@ function EditPage() {
 		return <> <Navbar /> Carregando...</>;
 	}
 
-	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
+	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza idPedido={pedido.idPedido} key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
 
 	let pizzascarrinho: Pizza[] = []
 	let carrinho: JSX.Element[] = []
@@ -48,7 +47,7 @@ function EditPage() {
 			}
 		}
 		for (let i = 0; i < pedido.carrinho.length; i++) {
-			carrinho[i] = <CompPizza key={pedido.carrinho[i].idItem} pizza={pizzascarrinho[i]} qtd={pedido.carrinho[i].qtd} adicionavel={false} removivel={true} />
+			carrinho[i] = <CompPizza key={pedido.carrinho[i].idItem} idPedido={pedido.idPedido} pizza={pizzascarrinho[i]} qtd={pedido.carrinho[i].qtd} adicionavel={false} removivel={true} />
 		}
 	}
 	else {

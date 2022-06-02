@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { excluirPizzaPedido, alterarPizzaPedido, criarPizzaPedido } from "../assets/rotasPedido";
 import Item from "../models/item";
 import Pizza from "../models/pizza";
 
@@ -7,19 +8,23 @@ interface PizzaProps {
 	adicionavel: boolean
 	removivel: boolean
 	qtd?: number
+	idPedido?: number
 }
 
 function CompPizza(props: PizzaProps) {
-	function addPizza(qtd: number) {
-		//muda o banco, relista as pizza
+	async function addPizza(qtd: number) {
+		await criarPizzaPedido(props.idPedido, props.pizza.idPizza, qtd)
+		window.location.reload()
 	}
 
-	function editPizza(qtd: number) {
-		//muda o banco, relista as pizza
-		if(qtd<=0){
-		//em vez de editar apaga
+	async function editPizza(qtd: number) {
+		if (qtd <= 0) {
+			await excluirPizzaPedido(props.idPedido, props.pizza.idPizza)
+			window.location.reload()
 		}
-		//else só altera a qtd
+		else {
+			await alterarPizzaPedido(props.idPedido, props.pizza.idPizza, qtd)
+		}
 	}
 
 	function parseInputValue(id: string) {
@@ -39,8 +44,8 @@ function CompPizza(props: PizzaProps) {
 			</> : <></>}
 
 			{props.removivel ? <>
-				<input type="number" id="qtdDelete" defaultValue={props.qtd} min="1" />
-				<button onClick={() => editPizza(parseInputValue('qtdDelete'))}>x</button>
+				<input type="number" id="qtdDelete" defaultValue={props.qtd} min="0" />
+				<button onClick={() => editPizza(parseInputValue('qtdDelete'))}>Alterar</button>
 			</> : <></>}
 
 		</div>

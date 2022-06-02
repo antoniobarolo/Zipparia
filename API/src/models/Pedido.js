@@ -42,17 +42,17 @@ class Pedido {
     static async excluir(id) {
         let erro = null;
         await app.sql.connect(async (sql) => {
-            await sql.query("delete from Pedido where id = ?", [id]);
+            await sql.query("delete from Pedido where idPedido = ?", [id]);
             if (!sql.affectedRows)
                 erro = "Pedido não encontrada";
         });
         return erro;
     }
-    static async criarPizzaNoPedido(Item) {
+    static async criarPizzaNoPedido(idPedido, idPizza, qtd) {
         let erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Item (idPedido, idPizza, qtd) values (?,?,?)", [Item.idPedido, Item.idPizza, Item.qtd]);
+                await sql.query("insert into Item (idPedido, idPizza, qtd) values (?,?,?)", [idPedido, idPizza, qtd]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -63,11 +63,11 @@ class Pedido {
         });
         return erro;
     }
-    static async excluirPizzaNoPedido(Item) {
+    static async excluirPizzaNoPedido(idPedido, idPizza) {
         let erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("delete from Item where idPedido = ? and idPizza = ? ", [Item.idPedido, Item.idPizza]);
+                await sql.query("delete from Item where idPedido = ? and idPizza = ? ", [idPedido, idPizza]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -78,11 +78,11 @@ class Pedido {
         });
         return erro;
     }
-    static async alterarPizzaNoPedido(Item) {
+    static async alterarPizzaNoPedido(idPedido, idPizza, qtd) {
         let erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("alter table Item set qtd = ? where idPedido = ? and idPizza = ?", [Item.qtd, Item.idPedido, Item.idPizza]);
+                await sql.query("update Item set qtd = ? where idPedido = ? and idPizza = ?", [qtd, idPedido, idPizza]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
