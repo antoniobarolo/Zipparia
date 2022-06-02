@@ -8,7 +8,7 @@ function Login() {
 			<div className="formLogin">
 				<label htmlFor="">Login</label>
 				<input type="text"/>
-				<label htmlFor="">Senha</label>
+				<label htmlFor="" className="senha">Senha</label>
 				<input type="text"/>
 				<button><Link to="/home">Entrar</Link></button>
 			</div>
