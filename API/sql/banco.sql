@@ -42,8 +42,6 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Rel_Pizza_Pedido` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
---A partir daqui é população
-
 INSERT INTO Pizza.Pedido(NomeCliente, Preco)
 VALUES('Jorge da Capadócia',0);
   

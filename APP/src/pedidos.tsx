@@ -28,7 +28,7 @@ function Pedidos() {
 		<>
 			<Navbar />
 			<h2>Pedidos:</h2>
-			<button></button>
+			<button>Novo Pedido</button>
 			{pedidos}
 		</>
 	);
