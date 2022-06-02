@@ -7,7 +7,6 @@ function Navbar() {
             <h1>Zipparia</h1>
             <ul>
                 <Link to="/home">Zippas</Link>
-                <br />
                 <Link to="/pedidos">Pedidos</Link>
             </ul>
         </nav>
