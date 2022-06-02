@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/navbar";
-import ControlePedidos from "./components/controlePedidos";
+import CompPedidos from "./components/compPedido";
 import { listarPedido, obterPedido } from "./assets/rotasPedido";
 import Pedido from "./models/pedido";
+import { Link } from "react-router-dom";
 
 function Pedidos() {
 	const [atualizando, setAtualizando] = useState(false);
@@ -22,13 +23,13 @@ function Pedidos() {
 	if (!infospedido) {
 		return <> <Navbar /> Carregando...</>;
 	}
-	let pedidos: JSX.Element[] = infospedido.map((pedido) => <ControlePedidos key={pedido.idPedido} pedido={pedido} />)
+	let pedidos: JSX.Element[] = infospedido.map((pedido) => <CompPedidos key={pedido.idPedido} pedido={pedido} />)
 
 	return (
 		<>
 			<Navbar />
 			<h2>Pedidos:</h2>
-			<button>Novo Pedido</button>
+			<button><Link to={"/editPage/create"}>+</Link></button>
 			{pedidos}
 		</>
 	);

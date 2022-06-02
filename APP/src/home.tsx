@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Pizza from "./models/pizza"
-import ItemPizza from "./components/itemPizza"
+import CompPizza from "./components/compPizza"
 import listarPizza from "./assets/rotasPizza"
 
 function Home() {
@@ -24,7 +24,7 @@ function Home() {
 		return <> <Navbar /> Carregando...</>;
 	}
 
-	let pizzas: JSX.Element[] = infospizza.map((pizza) => <ItemPizza key={pizza.idPizza} pizza={pizza} adicionavel={false} removivel={false} />)
+	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza key={pizza.idPizza} pizza={pizza} adicionavel={false} removivel={false} />)
 	return (
 		atualizando ? (<>Carregando...</>) : (<>
 			<Navbar />

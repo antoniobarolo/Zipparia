@@ -4,19 +4,19 @@ class Pedido {
     static async listar() {
         let lista = null;
         await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select idPedido, NomeCliente, Preco from Pedido order by idPedido asc"));
+            lista = (await sql.query("select idPedido, nomeCliente, preco from Pedido order by idPedido asc"));
         });
         return lista || [];
     }
     static async obter(idPedido) {
-        let pedido = null;
+        let lista = null;
         await app.sql.connect(async (sql) => {
-            const lista = (await sql.query("select idPedido, NomeCliente, Preco from Pedido where idPedido = ?", [idPedido]));
+            lista = (await sql.query("select idPedido, nomeCliente, preco from Pedido where idPedido = ?", [idPedido]));
             if (lista && lista.length) {
-                lista[0].Pizza = await sql.query("select idRel_Pizza_Pedido, idPedido, idPizza, Quantidade from Rel_Pizza_Pedido where idPedido = ?", [idPedido]);
+                lista[0].carrinho = await sql.query("select idItem, idPedido, idPizza, qtd from Item where idPedido = ?", [idPedido]);
             }
         });
-        return pedido;
+        return (lista && lista[0]) || null;
     }
     static async criar(p) {
         let erro;
@@ -24,7 +24,7 @@ class Pedido {
             return erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Pedido (NomeCliente, Preco) values (?,?)", [p.NomeCliente, p.Preco]);
+                await sql.query("insert into Pedido (nomeCliente, preco) values (?,?)", [p.nomeCliente, p.preco]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -48,11 +48,11 @@ class Pedido {
         });
         return erro;
     }
-    static async criarPizzaNoPedido(Rel_Pizza_Pedido) {
+    static async criarPizzaNoPedido(Item) {
         let erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Rel_Pizza_Pedido (idPedido, idPizza, Quantidade) values (?,?,?)", [Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza, Rel_Pizza_Pedido.Quantidade]);
+                await sql.query("insert into Item (idPedido, idPizza, qtd) values (?,?,?)", [Item.idPedido, Item.idPizza, Item.qtd]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -63,11 +63,11 @@ class Pedido {
         });
         return erro;
     }
-    static async excluirPizzaNoPedido(Rel_Pizza_Pedido) {
+    static async excluirPizzaNoPedido(Item) {
         let erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("delete from Rel_Pizza_Pedido where idPedido = ? and idPizza = ? ", [Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza]);
+                await sql.query("delete from Item where idPedido = ? and idPizza = ? ", [Item.idPedido, Item.idPizza]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -78,11 +78,11 @@ class Pedido {
         });
         return erro;
     }
-    static async alterarPizzaNoPedido(Rel_Pizza_Pedido) {
+    static async alterarPizzaNoPedido(Item) {
         let erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("alter table Rel_Pizza_Pedido set quantidade = ? where idPedido = ? and idPizza = ?", [Rel_Pizza_Pedido.Quantidade, Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza]);
+                await sql.query("alter table Item set qtd = ? where idPedido = ? and idPizza = ?", [Item.qtd, Item.idPedido, Item.idPizza]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")

@@ -1,20 +1,20 @@
 import app = require("teem");
 import Pizza = require("./Pizza");
-import Rel_Pizza_Pedido = require("./RelPedidoPizza");
+import Item = require("./Item");
 
 class Pedido{
   
   public idPedido: number;
-  public NomeCliente: string;
-  public Preco: number;
-  public Pizza: Rel_Pizza_Pedido[];
+  public nomeCliente: string;
+  public preco: number;
+  public carrinho: Item[];
 
   public static async listar(): Promise<Pedido[]> {
     let lista: Pedido[] = null;
     
     await app.sql.connect(async (sql: app.Sql) => {
       lista = (await sql.query( 
-        "select idPedido, NomeCliente, Preco from Pedido order by idPedido asc"
+        "select idPedido, nomeCliente, preco from Pedido order by idPedido asc"
       )) as Pedido[];
     });
 
@@ -22,15 +22,14 @@ class Pedido{
   }
 
   public static async obter(idPedido: number): Promise<Pedido> {
-    let pedido: Pedido = null
+    let lista: Pedido[] = null
     await app.sql.connect(async (sql:app.Sql) => {
-      const lista: Pedido[] = (await sql.query("select idPedido, NomeCliente, Preco from Pedido where idPedido = ?", [idPedido]));
+      lista = (await sql.query("select idPedido, nomeCliente, preco from Pedido where idPedido = ?", [idPedido])) as Pedido[];
       if (lista && lista.length) {
-        lista[0].Pizza = await sql.query("select idRel_Pizza_Pedido, idPedido, idPizza, Quantidade from Rel_Pizza_Pedido where idPedido = ?", [idPedido]);
+        lista[0].carrinho = await sql.query("select idItem, idPedido, idPizza, qtd from Item where idPedido = ?", [idPedido]) as Item[];
       }
     });
-
-    return pedido
+    return (lista && lista[0]) || null;
   }
 
   public static async criar(p: Pedido): Promise<string> {
@@ -39,7 +38,7 @@ class Pedido{
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("insert into Pedido (NomeCliente, Preco) values (?,?)", [p.NomeCliente,p.Preco]);
+        await sql.query("insert into Pedido (nomeCliente, preco) values (?,?)", [p.nomeCliente,p.preco]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido ${p.idPedido} já existe`;
@@ -65,12 +64,12 @@ class Pedido{
     return erro;
   }
 
-  public static async criarPizzaNoPedido(Rel_Pizza_Pedido: Rel_Pizza_Pedido): Promise<string> {
+  public static async criarPizzaNoPedido(Item: Item): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("insert into Rel_Pizza_Pedido (idPedido, idPizza, Quantidade) values (?,?,?)", [Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza, Rel_Pizza_Pedido.Quantidade]);
+        await sql.query("insert into Item (idPedido, idPizza, qtd) values (?,?,?)", [Item.idPedido, Item.idPizza, Item.qtd]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;
@@ -81,12 +80,12 @@ class Pedido{
     return erro;
   }
 
-  public static async excluirPizzaNoPedido(Rel_Pizza_Pedido: Rel_Pizza_Pedido): Promise<string> {
+  public static async excluirPizzaNoPedido(Item: Item): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("delete from Rel_Pizza_Pedido where idPedido = ? and idPizza = ? ", [Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza]);
+        await sql.query("delete from Item where idPedido = ? and idPizza = ? ", [Item.idPedido, Item.idPizza]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;
@@ -97,12 +96,12 @@ class Pedido{
     return erro;
   }
 
-  public static async alterarPizzaNoPedido(Rel_Pizza_Pedido: Rel_Pizza_Pedido): Promise<string> {
+  public static async alterarPizzaNoPedido(Item: Item): Promise<string> {
     let erro: string;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("alter table Rel_Pizza_Pedido set quantidade = ? where idPedido = ? and idPizza = ?", [Rel_Pizza_Pedido.Quantidade, Rel_Pizza_Pedido.idPedido, Rel_Pizza_Pedido.idPizza]);
+        await sql.query("alter table Item set qtd = ? where idPedido = ? and idPizza = ?", [Item.qtd, Item.idPedido, Item.idPizza]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido já existe`;
