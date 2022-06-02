@@ -9,7 +9,7 @@ import Pizza from "./models/pizza";
 
 function EditPage() {
 	const params = useParams();
-	
+
 	const criacao = (params.idPedido == 'create')
 
 	const [atualizando, setAtualizando] = useState(false)
@@ -55,8 +55,12 @@ function EditPage() {
 	}
 	//let carrinho: JSX.Element[] = pedido.carrinho.length ? pedido.carrinho.map((p) => <CompPizza key={p.idItem} pizza={pizzascarrinho[p]} qtd={p.qtd} adicionavel={false} removivel={true} />) : [<p>{'nenhuma pizza no carrinho'}</p>]
 
-	function editNome() {
-		//repassa pra função EditNomeCliente dentro do componente
+	function updateCliente() {
+		if(criacao){
+
+		}
+		else
+		parseInt((document.getElementById('botaoNome') as HTMLInputElement).value)
 	}
 
 	return (
@@ -64,15 +68,17 @@ function EditPage() {
 			<Navbar />
 			<section className="formPedido">
 				<input type="text" value={pedido.nomeCliente} />
-				<button onClick={editNome}>Salvar</button>
+				<button id='botaoNome' onClick={updateCliente}>Salvar</button>
 				<div>
 					<h3>Zippas no carrinho:</h3>
 					{carrinho}
 				</div>
 			</section>
-			<hr />
-			<h2>Adicionar Zippas:</h2>
-			{pizzas}
+			{criacao ? <></> : <>
+				<hr />
+				<h2>Adicionar Zippas:</h2>
+				{pizzas}
+			</>}
 		</>
 	);
 }

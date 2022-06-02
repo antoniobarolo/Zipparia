@@ -34,28 +34,40 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Item` (
   CONSTRAINT `FK_idPedido`
     FOREIGN KEY (`idPedido`)
     REFERENCES `Pizza`.`Pedido` (`idPedido`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_idPizza`
     FOREIGN KEY (`idPizza`)
     REFERENCES `Pizza`.`Pizza` (`idPizza`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION, CONSTRAINT `unique_Pizza` unique(`idPedido`, `idPizza`));
 
 INSERT INTO Pizza.Pedido(nomeCliente, preco)
 VALUES ('Jorge da Capadócia',0);
   
 INSERT INTO Pizza.Pedido(nomeCliente,preco)
 VALUES('Jimmy Neutron',0);
+
+INSERT INTO Pizza.Pedido(nomeCliente,preco)
+VALUES('Sandra Punjab',0);
+
+INSERT INTO Pizza.Pedido(nomeCliente,preco)
+VALUES('Acererak Souza',0);
+
+INSERT INTO Pizza.Pedido(nomeCliente,preco)
+VALUES('Aziz ab Sobral',0);
   
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES ('Pizza ruim','Ela é muito boaaa',10);
+VALUES ('Pizza ruim','Ela é muito boaaa',10.90);
   
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES('Zippa de .zip','Sabor comprimido',18);
+VALUES('Zippa de .zip','Sabor comprimido',18.90);
 
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES('Zippa de PEDRA','Sabor indescritível',20);
+VALUES('Zippa de PEDRA','Sabor indescritível, nada perdoa',20.50);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zippa de Amor','Não existe amor em SP, mas na ZP existe',9.99);
   
 INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
 VALUES (1,1,3);
@@ -71,3 +83,12 @@ VALUES (2,2,1);
 
 INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
 VALUES (2,3,1);
+
+INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
+VALUES (3,2,1);
+
+INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
+VALUES (3,4,1);
+
+INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
+VALUES (5,3,5);

@@ -10,11 +10,6 @@ interface CompPedidoProps {
 
 function CompPedidos(props: CompPedidoProps) {
 
-    async function editNomeCliente(novoNomeCliente: string) {
-        
-        window.location.reload()
-    }
-
     async function deletePedido() {
         await excluir(props.pedido.idPedido)
         window.location.reload()
