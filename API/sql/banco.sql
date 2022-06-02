@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Rel_Pizza_Pedido` (
   `idPizza` INT NOT NULL,
   `Quantidade` INT,
   PRIMARY KEY (`idRel_Pizza_Pedido`),
-  INDEX `FK_idPedido_idx` (`idPedido` ASC) VISIBLE,
-  INDEX `FK_idPizza_idx` (`idPizza` ASC) VISIBLE,
+  INDEX `FK_idPedido_idx` (`idPedido` ASC),
+  INDEX `FK_idPizza_idx` (`idPizza` ASC),
   CONSTRAINT `FK_idPedido`
     FOREIGN KEY (`idPedido`)
     REFERENCES `Pizza`.`Pedido` (`idPedido`)
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Rel_Pizza_Pedido` (
     FOREIGN KEY (`idPizza`)
     REFERENCES `Pizza`.`Pizza` (`idPizza`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION);
 
 --A partir daqui é população
 
