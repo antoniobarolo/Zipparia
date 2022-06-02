@@ -9,5 +9,32 @@ body {
 }
 
 h1 {
-	font-style: italic;
+	margin-top: 20px;
+	font-size: 70px;
+	text-align: center;
+	font-family: 'Caveat', cursive;
 }
+
+button{
+	margin-left: 20px;
+	border-radius: 10px;
+	padding: 7px 15px;
+	cursor: pointer;
+	border: none;
+	background-color: rgba(122, 122, 243, 0.246);
+}
+
+button:hover, a:active {
+	color: #131212; 
+	background-color: rgb(187, 234, 248);
+  }
+
+.erro{
+	  color: rgb(228, 63, 63);
+}
+.formLogin{
+	text-align: center;
+	margin-top: 10%;
+	font-size: 20px;
+}
+

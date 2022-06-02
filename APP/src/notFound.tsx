@@ -7,7 +7,7 @@ function NotFound() {
 	return (
 		<>
 			<Navbar />
-			<h1>Página não encontrada</h1>
+			<h1 className="erro">Página não encontrada</h1>
 		</>
 
 	);
