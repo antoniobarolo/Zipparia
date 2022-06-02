@@ -21,8 +21,8 @@ function CompPedidos(props: CompPedidosProps) {
             <div className="pedidoCabecalho">
                 <h3>{props.pedido.nomeCliente}</h3> <span className="preco">Preço total: R${props.pedido.preco}0</span>
             </div>
-            <button> <Link to={editLink}>Edit</Link></button>
-            <button onClick={deletePedido}>x</button>
+            <button className='botaoPedido'> <Link to={editLink}>Edit</Link></button>
+            <button className='botaoPedido' onClick={deletePedido}>x</button>
         </div>
     );
 

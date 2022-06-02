@@ -6,22 +6,22 @@ import CompPizza from "./components/compPizza"
 import listarPizza from "./assets/rotasPizza"
 
 function Home() {
-	const [atualizando, setAtualizando] = useState(false);
-	const [infospizza, setInfospizza] = useState<Pizza[]>(null);
+	const [atualizando, setAtualizando] = useState(false)
+	const [infospizza, setInfospizza] = useState<Pizza[]>(null)
 
 	async function getPizzas() {
 		setAtualizando(true);
-		setInfospizza(await listarPizza() || []);
+		setInfospizza(await listarPizza() || [])
 		setAtualizando(false);
 	}
 
 	useEffect(() => {
 		if (!atualizando && !infospizza)
-			getPizzas();
+			getPizzas()
 	});
 
 	if(!infospizza){
-		return <> <Navbar /> Carregando...</>;
+		return <> <Navbar /> Carregando...</>
 	}
 
 	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza key={pizza.idPizza} pizza={pizza} adicionavel={false} removivel={false} />)
