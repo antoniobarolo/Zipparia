@@ -1,6 +1,6 @@
 class Rel_Pizza_Pedido{
   
-    public id: number;
+    public idRel_Pizza_Pedido: number;
     public idPedido: number;
     public idPizza: number;
     public Quantidade: number;

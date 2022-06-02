@@ -1,26 +1,26 @@
 import Pedido from "../models/pedido";
 
-async function listarPedido(): Promise<Pedido[]> {
+export async function listarPedido(): Promise<Pedido[]> {
     try {
         let pedidos = await fetch("http://localhost:3000/api/pedido/listar");
-        return JSON.parse(await pedidos.text()) as Pedido[]
+        return await pedidos.json() as Pedido[]
 
     } catch (motivoDoErro) {
         alert("Algo saiu errado" + motivoDoErro);
     }
 }
 
-async function obterPedido(id: number): Promise<Pedido> {
+export async function obterPedido(id: number): Promise<Pedido> {
     try {
         let pedidos = await fetch(`http://localhost:3000/api/pedido/obter/${id}`);
-        return JSON.parse(await pedidos.text()) as Pedido;
+        return await pedidos.json() as Pedido;
     }
     catch (motivoDoErro) {
         alert("Algo saiu errado" + motivoDoErro);
     }
 }
 
-async function Criar() {
+export async function Criar() {
     try {
         const formData = new FormData(document.querySelector('form'))
         var pedido = {};
@@ -47,7 +47,7 @@ async function Criar() {
 
 }
 
-async function criarPizzaPedido(idPedido, idPizza) {
+export async function criarPizzaPedido(idPedido, idPizza) {
 
     try {
         console.log('id pedido:' + idPedido + ', id pizza:' + idPizza)
@@ -64,7 +64,7 @@ async function criarPizzaPedido(idPedido, idPizza) {
     }
 }
 
-async function excluirPizzaPedido(idPedido, idPizza) {
+export async function excluirPizzaPedido(idPedido, idPizza) {
 
     try {
         console.log('id pedido:' + idPedido + ', id pizza:' + idPizza)
@@ -81,7 +81,7 @@ async function excluirPizzaPedido(idPedido, idPizza) {
     }
 }
 
-async function excluir(idPedido) {
+export async function excluir(idPedido) {
 
     try {
         console.log('id pedido:' + idPedido)
@@ -97,6 +97,3 @@ async function excluir(idPedido) {
 
     }
 }
-
-const _ = {listarPedido, obterPedido}
-export default _

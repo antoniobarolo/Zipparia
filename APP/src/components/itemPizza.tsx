@@ -9,7 +9,7 @@ interface PizzaProps {
 	qtd?: number
 }
 
-function Pizza(props: PizzaProps) {
+function ItemPizza(props: PizzaProps) {
 	function addPizza(qtd: number) {
 		//muda o banco, relista as pizza
 	}
@@ -25,9 +25,9 @@ function Pizza(props: PizzaProps) {
 	return (
 		<div className="pizza">
 			<div className="pizzaCabecalho">
-				<h3>{props.pizza.nome}</h3> <span className="preco">R${props.pizza.preco}0</span>
+				<h3>{props.pizza.Nome}</h3> <span className="preco">R${props.pizza.Preco.replace('.', ',')}</span>
 			</div>
-			<p>{props.pizza.descricao}</p>
+			<p>{props.pizza.Descricao}</p>
 
 			{props.adicionavel ? <>
 				<input type="number" id="qtdAdd" defaultValue={1} min="1" />
@@ -43,4 +43,4 @@ function Pizza(props: PizzaProps) {
 	);
 }
 
-export default Pizza;
+export default ItemPizza;

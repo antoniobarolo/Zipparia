@@ -1,0 +1,20 @@
+editpage:
+
+	const params = useParams();
+	let pedido: Pedido = null;// @@@ await obterPedido(params.idPedido);
+
+	//pizzas que estão no pedido da pessoa
+
+	let carrinho: JSX.Element[] = []
+	for (let index = 0; index < pedido.carrinho.length; index++) {
+		carrinho[index] = <ItemPizza pizza={pedido.carrinho[index].pizza} qtd={pedido.carrinho[index].qtd} adicionavel={false} removivel={true} />
+	}
+
+	//lista de pizzas genéricas para serem adicionadas
+
+	
+	let infospizza: Pizza[] = null; // @@@ await listarPizza();
+	let pizzas: JSX.Element[] = []
+	for (let index = 0; index < infospizza.length; index++) {
+		pizzas[index] = <ItemPizza pizza={infospizza[index]} adicionavel={true} removivel={false} />
+	}

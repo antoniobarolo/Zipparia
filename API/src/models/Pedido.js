@@ -11,7 +11,10 @@ class Pedido {
     static async obter(idPedido) {
         let pedido = null;
         await app.sql.connect(async (sql) => {
-            pedido = (await sql.query("select pe.NomeCliente, p.idPizza, p.Nome, p.Descricao, p.Preco, pe.Preco, r.Quantidade from Rel_Pizza_Pedido r INNER JOIN Pizza p on r.idPizza = p.idPizza INNER JOIN Pedido pe on r.idPedido = pe.idPedido where r.idPedido = ?", [idPedido]));
+            const lista = (await sql.query("select idPedido, NomeCliente, Preco from Pedido where idPedido = ?", [idPedido]));
+            if (lista && lista.length) {
+                lista[0].Pizza = await sql.query("select idRel_Pizza_Pedido, idPedido, idPizza, Quantidade from Rel_Pizza_Pedido where idPedido = ?", [idPedido]);
+            }
         });
         return pedido;
     }

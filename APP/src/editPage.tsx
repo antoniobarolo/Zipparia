@@ -1,40 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import Pizza from "./components/Pizza";
+import ItemPizza from "./components/itemPizza";
 import Navbar from "./components/navbar";
-import _ from "./assets/rotasPedido";
-import listarPizza from "./assets/rotasPizza"
+import listarPizza from "./assets/rotasPizza";
+import { obterPedido } from "./assets/rotasPedido";
+import Pedido from "./models/pedido";
+import Pizza from "./models/pizza";
+import Item from "./models/item";
 
-async function EditPage() {
-	const params = parseInt(useParams())
-	let pedido = await _.obterPedido(params)
+function EditPage() {
+	const params = useParams();
+	const [atualizando, setAtualizando] = useState(false);
+	const [infospizza, setInfospizza] = useState<Pizza[]>(null);
+	const [pedido, setPedido] = useState<Pedido>(null);
 
-	//pizzas que estão no pedido da pessoa
-	let carrinho: JSX.Element[] = []
-	for (let index = 0; index < pedido.carrinho.length; index++) {
-		carrinho[index] = <Pizza pizza={pedido.carrinho[index].pizza} qtd={pedido.carrinho[index].qtd} adicionavel={false} removivel={true}/>
-	}
-
+	//pedido e carrinho
 	//lista de pizzas genéricas para serem adicionadas
-	let infospizza = await listarPizza()
-	let pizzas: JSX.Element[] = []
-	for (let index = 0; index < infospizza.length; index++) {
-		pizzas[index] = <Pizza pizza={infospizza[index]} adicionavel={true} removivel={false}/>
+	async function getPedidoPizza() {
+		setAtualizando(true);
+		setInfospizza(await listarPizza() || []);
+		setPedido(await obterPedido(parseInt(params.idPedido)));
+		setAtualizando(false);
 	}
 
-	function EditNome(){
-	//repassa pra função EditNomeCliente dentro do componente
+	useEffect(() => {
+		if (!atualizando && (!pedido || !infospizza)) {
+			getPedidoPizza();
+		}
+	});
+
+	if (!pedido || !infospizza) {
+		return <> <Navbar /> Carregando...</>;
+	}
+
+	let carrinho: JSX.Element[] = pedido.Pizza.map((p) => <ItemPizza key={p.id} pizza={p.Pizza} qtd={p.Quantidade} adicionavel={false} removivel={true} />)
+
+	let pizzas: JSX.Element[] = infospizza.map((pizza) => <ItemPizza key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
+
+	function EditNome() {
+		//repassa pra função EditNomeCliente dentro do componente
 	}
 
 	return (
 		<>
 			<Navbar />
 			<section className="formPedido">
-				<input type="text" value={pedido.nomeCliente} />
+				<input type="text" value={pedido.NomeCliente} />
 				<button onClick={EditNome}>Definir Nome</button>
 				<div>
 					<h3>Zippas no carrinho:</h3>
-					{carrinho}	
+					{carrinho}
 				</div>
 			</section>
 			<h2>Adicionar Zippas:</h2>

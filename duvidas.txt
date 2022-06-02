@@ -1,12 +1,3 @@
 Dúvidas pro Rafa:
 
-1- não ta mais achando os módulos de 'Routes' (index.tsx)
-eu atualizei umas parada no tsc pra resolver outro erro, que resolvi mas ai apareceu isso agr
-
-2- async function no home.tsx, editPage.tsx, pedido.tsx: tudo bem fazer isso?
-
-3- como exporta varias funcoes de um arquivo? criando variavel _ que nem eu fiz?
-
-4- Precisa da Key na model do pedido, e de Hooks para a nossa arquitetura? não né?
-
 5- Editar e Excluir

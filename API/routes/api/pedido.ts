@@ -8,7 +8,7 @@ class PedidoApiRoute {
   public async listar(req: app.Request, res: app.Response) {
       let lista = await Pedido.listar();
 
-      res.json(JSON.stringify(lista));
+      res.json(lista);
   }
 
   
