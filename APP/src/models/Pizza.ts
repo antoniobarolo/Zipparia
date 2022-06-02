@@ -1,7 +1,7 @@
 
 export default interface Pizza {
     idPizza: number
-    Nome: string
-    Descricao: string
-    Preco: string
+    nome: string
+    descricao: string
+    preco: string
 }

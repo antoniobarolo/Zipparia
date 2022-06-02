@@ -1,7 +1,7 @@
 import app = require("teem");
 import Pedido = require("../../models/Pedido");
 import Pizza = require("../../models/Pizza");
-import Rel_Pizza_Pedido = require("../../models/RelPedidoPizza");
+import Item = require("../../models/Item");
 
 class PedidoApiRoute {
 
@@ -56,7 +56,7 @@ class PedidoApiRoute {
   public async criarPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
 
-      let pedido = req.body as Rel_Pizza_Pedido;
+      let pedido = req.body as Item;
       erro = await Pedido.criarPizzaNoPedido(pedido);
 
       if(erro){
@@ -70,7 +70,7 @@ class PedidoApiRoute {
   public async excluirPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
 
-      let pedido = req.body as Rel_Pizza_Pedido;
+      let pedido = req.body as Item;
       erro = await Pedido.criarPizzaNoPedido(pedido);
 
       if(erro){

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import ItemPizza from "./components/itemPizza";
+import CompPizza from "./components/compPizza";
 import Navbar from "./components/navbar";
 import listarPizza from "./assets/rotasPizza";
 import { obterPedido } from "./assets/rotasPedido";
@@ -10,12 +10,12 @@ import Item from "./models/item";
 
 function EditPage() {
 	const params = useParams();
-	const [atualizando, setAtualizando] = useState(false);
-	const [infospizza, setInfospizza] = useState<Pizza[]>(null);
-	const [pedido, setPedido] = useState<Pedido>(null);
+	const criacao = (params.idPedido == 'create')
 
-	//pedido e carrinho
-	//lista de pizzas genéricas para serem adicionadas
+	const [atualizando, setAtualizando] = useState(false)
+	const [infospizza, setInfospizza] = useState<Pizza[]>(null)
+	const [pedido, setPedido] = useState<Pedido>(null)
+
 	async function getPedidoPizza() {
 		setAtualizando(true);
 		setInfospizza(await listarPizza() || []);
@@ -33,20 +33,24 @@ function EditPage() {
 		return <> <Navbar /> Carregando...</>;
 	}
 
-	let carrinho: JSX.Element[] = pedido.Pizza.map((p) => <ItemPizza key={p.id} pizza={p.Pizza} qtd={p.Quantidade} adicionavel={false} removivel={true} />)
+	let carrinho: JSX.Element[] = pedido.carrinho.length? pedido.carrinho.map((p) => <CompPizza key={p.idItem} pizza={infospizza[p.idpizza]} qtd={p.qtd} adicionavel={false} removivel={true} />) : [<p>{'nenhuma pizza no carrinho'}</p>]
 
-	let pizzas: JSX.Element[] = infospizza.map((pizza) => <ItemPizza key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
+	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
 
-	function EditNome() {
+	function editNome() {
 		//repassa pra função EditNomeCliente dentro do componente
+	}
+
+	function createPedido(){
+
 	}
 
 	return (
 		<>
 			<Navbar />
 			<section className="formPedido">
-				<input type="text" value={pedido.NomeCliente} />
-				<button onClick={EditNome}>Definir Nome</button>
+				<input type="text" value={pedido.nomeCliente} />
+				<button onClick={criacao? createPedido : editNome}>Salvar</button>
 				<div>
 					<h3>Zippas no carrinho:</h3>
 					{carrinho}

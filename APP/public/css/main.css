@@ -5,6 +5,7 @@ body {
 	background-image:url("/public/alien.jpg");
 	background-repeat: no-repeat;
 	background-size:cover;
+	color: white
 }
 
 .app {

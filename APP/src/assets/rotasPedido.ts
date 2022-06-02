@@ -20,7 +20,7 @@ export async function obterPedido(id: number): Promise<Pedido> {
     }
 }
 
-export async function Criar() {
+export async function criar() {
     try {
         const formData = new FormData(document.querySelector('form'))
         var pedido = {};

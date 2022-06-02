@@ -2,11 +2,11 @@ import React from "react";
 import Pedido from "../models/pedido";
 import { Link } from "react-router-dom";
 
-interface ControlePedidosProps {
+interface CompPedidosProps {
     pedido: Pedido,
 }
 
-function ControlePedidos(props: ControlePedidosProps) {
+function CompPedidos(props: CompPedidosProps) {
 
     function editNomeCliente(novoNomeCliente: string) {
     }
@@ -19,7 +19,7 @@ function ControlePedidos(props: ControlePedidosProps) {
     return (
         <div>
             <div className="pedidoCabecalho">
-                <h3>{props.pedido.NomeCliente}</h3> <span className="preco">Preço total: R${props.pedido.Preco}0</span>
+                <h3>{props.pedido.nomeCliente}</h3> <span className="preco">Preço total: R${props.pedido.preco}0</span>
             </div>
             <button> <Link to={editLink}>Edit</Link></button>
             <button onClick={deletePedido}>x</button>
@@ -28,4 +28,4 @@ function ControlePedidos(props: ControlePedidosProps) {
 
 }
 
-export default ControlePedidos;
+export default CompPedidos;

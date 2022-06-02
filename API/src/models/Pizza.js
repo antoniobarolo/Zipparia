@@ -4,14 +4,14 @@ class Pizza {
     static async listar() {
         let lista = null;
         await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select idPizza, Nome, Descricao, Preco from Pizza order by nome asc"));
+            lista = (await sql.query("select idPizza, nome, descricao, preco from Pizza order by nome asc"));
         });
         return lista || [];
     }
     static async obter(id) {
         let lista = null;
         await app.sql.connect(async (sql) => {
-            lista = (await sql.query("select idPizza, Nome, Descricao, Preco from Pizza where idPizza = ?", [id]));
+            lista = (await sql.query("select idPizza, nome, descricao, preco from Pizza where idPizza = ?", [id]));
         });
         return (lista && lista[0]) || null;
     }
@@ -21,11 +21,11 @@ class Pizza {
             return erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Pizza (Nome, Descricao, Preco) values (?,?,?)", [p.Nome, p.Descricao, p.Preco]);
+                await sql.query("insert into Pizza (nome, descricao, preco) values (?,?,?)", [p.nome, p.descricao, p.preco]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
-                    erro = `A Pizza ${p.Nome} já existe`;
+                    erro = `A Pizza ${p.nome} já existe`;
                 else
                     throw e;
             }
@@ -42,15 +42,15 @@ class Pizza {
             return erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("update Pizza set Nome = ?,set Descricao = ?, set Preco = ?", [
-                    p.Nome,
-                    p.Descricao,
-                    p.Preco,
+                await sql.query("update Pizza set nome = ?,set descricao = ?, set preco = ?", [
+                    p.nome,
+                    p.descricao,
+                    p.preco,
                 ]);
             }
             catch (e) {
                 if (e.code && e.code === "ER_DUP_ENTRY")
-                    erro = `A Pizza ${p.Nome} já existe`;
+                    erro = `A Pizza ${p.nome} já existe`;
                 else
                     throw e;
             }
