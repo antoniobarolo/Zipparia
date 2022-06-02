@@ -14,8 +14,12 @@ function CompPizza(props: PizzaProps) {
 		//muda o banco, relista as pizza
 	}
 
-	function deletePizza(qtd: number) {
+	function editPizza(qtd: number) {
 		//muda o banco, relista as pizza
+		if(qtd<=0){
+		//em vez de editar apaga
+		}
+		//else só altera a qtd
 	}
 
 	function parseInputValue(id: string) {
@@ -35,8 +39,8 @@ function CompPizza(props: PizzaProps) {
 			</> : <></>}
 
 			{props.removivel ? <>
-				<input type="number" id="qtdDelete" defaultValue={props.qtd} min="1" max={props.qtd} />
-				<button onClick={() => deletePizza(parseInputValue('qtdDelete'))}>x</button>
+				<input type="number" id="qtdDelete" defaultValue={props.qtd} min="1" />
+				<button onClick={() => editPizza(parseInputValue('qtdDelete'))}>x</button>
 			</> : <></>}
 
 		</div>

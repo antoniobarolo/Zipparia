@@ -10,6 +10,7 @@ import Item from "./models/item";
 
 function EditPage() {
 	const params = useParams();
+	
 	const criacao = (params.idPedido == 'create')
 
 	const [atualizando, setAtualizando] = useState(false)
@@ -33,16 +34,30 @@ function EditPage() {
 		return <> <Navbar /> Carregando...</>;
 	}
 
-	let carrinho: JSX.Element[] = pedido.carrinho.length? pedido.carrinho.map((p) => <CompPizza key={p.idItem} pizza={infospizza[p.idpizza]} qtd={p.qtd} adicionavel={false} removivel={true} />) : [<p>{'nenhuma pizza no carrinho'}</p>]
-
 	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
+
+	let pizzascarrinho: Pizza[] = []
+	let carrinho: JSX.Element[] = []
+	if (pedido.carrinho.length) {
+		for (let p = 0; p < pedido.carrinho.length; p++) {
+			for (let i = 0; i < infospizza.length; i++) {
+				if (pedido.carrinho[p].idPizza == infospizza[i].idPizza) {
+					pizzascarrinho[p] = infospizza[i]
+					console.log(pizzascarrinho[p].nome)
+				}
+			}
+		}
+		for (let i = 0; i < pedido.carrinho.length; i++) {
+			carrinho[i] = <CompPizza key={pedido.carrinho[i].idItem} pizza={pizzascarrinho[i]} qtd={pedido.carrinho[i].qtd} adicionavel={false} removivel={true} />
+		}
+	}
+	else {
+		carrinho = [<p>{'nenhuma pizza no carrinho'}</p>]
+	}
+	//let carrinho: JSX.Element[] = pedido.carrinho.length ? pedido.carrinho.map((p) => <CompPizza key={p.idItem} pizza={pizzascarrinho[p]} qtd={p.qtd} adicionavel={false} removivel={true} />) : [<p>{'nenhuma pizza no carrinho'}</p>]
 
 	function editNome() {
 		//repassa pra função EditNomeCliente dentro do componente
-	}
-
-	function createPedido(){
-
 	}
 
 	return (
@@ -50,12 +65,13 @@ function EditPage() {
 			<Navbar />
 			<section className="formPedido">
 				<input type="text" value={pedido.nomeCliente} />
-				<button onClick={criacao? createPedido : editNome}>Salvar</button>
+				<button onClick={editNome}>Salvar</button>
 				<div>
 					<h3>Zippas no carrinho:</h3>
 					{carrinho}
 				</div>
 			</section>
+			<hr />
 			<h2>Adicionar Zippas:</h2>
 			{pizzas}
 		</>

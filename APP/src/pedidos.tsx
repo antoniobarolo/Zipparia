@@ -29,7 +29,7 @@ function Pedidos() {
 		<>
 			<Navbar />
 			<h2>Pedidos:</h2>
-			<button><Link to={"/editPage/create"}>+</Link></button>
+			<button className="botaoPedido"><Link to={"/editPage/create/"}>+</Link></button>
 			{pedidos}
 		</>
 	);
