@@ -35,6 +35,23 @@ class Pedido {
         });
         return erro;
     }
+    static async alterar(p) {
+        let erro;
+        if ((erro = Pedido.validar(p)))
+            return erro;
+        await app.sql.connect(async (sql) => {
+            try {
+                await sql.query("update Pedido set nomeCliente = ? and set preco = ? ", [p.nomeCliente, p.preco]);
+            }
+            catch (e) {
+                if (e.cod && e.code === "ER_DUP_ENTRY")
+                    erro = `O Pedido ${p.idPedido} já existe`;
+                else
+                    throw e;
+            }
+        });
+        return erro;
+    }
     static validar(p) {
         // throw new Error("Method not implemented.");
         return null;
@@ -56,7 +73,7 @@ class Pedido {
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
-                    erro = `A Pedido já existe`;
+                    erro = `A Pizza já existe neste pedido`;
                 else
                     throw e;
             }

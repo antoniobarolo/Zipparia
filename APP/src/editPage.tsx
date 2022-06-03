@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import CompPizza from "./components/compPizza";
 import Navbar from "./components/navbar";
 import listarPizza from "./assets/rotasPizza";
-import { obterPedido } from "./assets/rotasPedido";
+import { alterar, obterPedido } from "./assets/rotasPedido";
 import Pedido from "./models/pedido";
 import Pizza from "./models/pizza";
 
@@ -61,7 +61,9 @@ function EditPage() {
 			<Link to={`/editPage/${pedido.idPedido}`}>Edit</Link>
 		}
 		else {
-			parseInt((document.getElementById('botaoNome') as HTMLInputElement).value)
+			let novoPedido: Pedido = {...pedido}
+			novoPedido.nomeCliente = (document.getElementById('botaoNome') as HTMLInputElement).value
+			alterar(novoPedido)
 		}
 	}
 
@@ -69,7 +71,7 @@ function EditPage() {
 		<>
 			<Navbar />
 			<section className="formPedido">
-				<input type="text" value={pedido.nomeCliente} />
+				<input type="text" defaultValue={pedido.nomeCliente} />
 				<button id='botaoNome' onClick={updateCliente}>Salvar</button>
 				<div>
 					<h3>Zippas no carrinho:</h3>

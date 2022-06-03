@@ -43,6 +43,17 @@ class PedidoApiRoute {
             res.json(true);
         }
     }
+    async alterar(req, res) {
+        let erro = null;
+        let pedido = req.body;
+        erro = await Pedido.alterar(pedido);
+        if (erro) {
+            res.status(400).json(erro);
+        }
+        else {
+            res.json(true);
+        }
+    }
     async criarPizzaNoPedido(req, res) {
         let erro = null;
         let pedido = parseInt(req.params['idPedido']);
@@ -104,6 +115,9 @@ __decorate([
 __decorate([
     app.http.post()
 ], PedidoApiRoute.prototype, "criar", null);
+__decorate([
+    app.http.post()
+], PedidoApiRoute.prototype, "alterar", null);
 __decorate([
     app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza/:qtd")
 ], PedidoApiRoute.prototype, "criarPizzaNoPedido", null);
