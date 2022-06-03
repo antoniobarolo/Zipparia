@@ -48,6 +48,24 @@ class Pedido{
 
     return erro;
   }
+
+  public static async alterar(p: Pedido): Promise<string> {
+    let erro: string;
+    if((erro = Pedido.validar(p))) return erro;
+
+    await app.sql.connect(async (sql: app.Sql) => {
+      try {
+        await sql.query("update Pedido set nomeCliente = ? and set preco = ? ", [p.nomeCliente,p.preco]);
+      } catch (e) {
+        if (e.cod && e.code === "ER_DUP_ENTRY")
+        erro = `O Pedido ${p.idPedido} já existe`;
+        else throw e;
+      }
+    });
+
+    return erro;
+  }
+
   static validar(p: Pedido): string {
    // throw new Error("Method not implemented.");
     return null;

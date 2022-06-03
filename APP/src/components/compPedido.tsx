@@ -1,7 +1,7 @@
 import React from "react";
 import Pedido from "../models/pedido";
 import { Link } from "react-router-dom";
-import {excluir} from '../assets/rotasPedido'
+import {alterar, excluir} from '../assets/rotasPedido'
 import Pedidos from '../pedidos'
 
 interface CompPedidoProps {
