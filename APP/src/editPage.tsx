@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import CompPizza from "./components/compPizza";
 import Navbar from "./components/navbar";
 import listarPizza from "./assets/rotasPizza";
-import { alterar, obterPedido } from "./assets/rotasPedido";
+import { criar, alterar, obterPedido } from "./assets/rotasPedido";
 import Pedido from "./models/pedido";
 import Pizza from "./models/pizza";
+import { propTypes } from "react-bootstrap/esm/Image";
+import Pedidos from "./pedidos";
 
 function EditPage() {
 	const params = useParams();
-
 	const criacao = (params.idPedido == 'create')
 
 	const [atualizando, setAtualizando] = useState(false)
 	const [infospizza, setInfospizza] = useState<Pizza[]>(null)
 	const [pedido, setPedido] = useState<Pedido>(null)
 
+	if (criacao) {
+		return (<>
+			<Navbar />
+			<section className="formPedido">
+				<input id='nomeCliente' type="text" />
+				<button onClick={updateCliente}>Criar</button>
+			</section>
+		</>)
+	}
+
+
 	async function getPedidoPizza() {
 		setAtualizando(true);
 		setInfospizza(await listarPizza() || []);
 		setPedido(await obterPedido(parseInt(params.idPedido)));
+		setAtualizando(false);
+	}
+
+	async function getPedidoPizzaZuada(id: number) {
+		setAtualizando(true);
+		setInfospizza(await listarPizza() || []);
+		setPedido(await obterPedido(id))
 		setAtualizando(false);
 	}
 
@@ -33,10 +52,13 @@ function EditPage() {
 		return <> <Navbar /> Carregando...</>;
 	}
 
-	let pizzas: JSX.Element[] = infospizza.map((pizza) => <CompPizza idPedido={pedido.idPedido} key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
 
+	let pizzas: JSX.Element[] = []
 	let pizzascarrinho: Pizza[] = []
 	let carrinho: JSX.Element[] = []
+
+	pizzas = infospizza.map((pizza) => <CompPizza pedido={pedido} key={pizza.idPizza} pizza={pizza} adicionavel={true} removivel={false} />)
+
 	if (pedido.carrinho.length) {
 		for (let p = 0; p < pedido.carrinho.length; p++) {
 			for (let i = 0; i < infospizza.length; i++) {
@@ -47,7 +69,7 @@ function EditPage() {
 			}
 		}
 		for (let i = 0; i < pedido.carrinho.length; i++) {
-			carrinho[i] = <CompPizza key={pedido.carrinho[i].idItem} idPedido={pedido.idPedido} pizza={pizzascarrinho[i]} qtd={pedido.carrinho[i].qtd} adicionavel={false} removivel={true} />
+			carrinho[i] = <CompPizza key={pedido.carrinho[i].idItem} pedido={pedido} pizza={pizzascarrinho[i]} qtd={pedido.carrinho[i].qtd} adicionavel={false} removivel={true} />
 		}
 	}
 	else {
@@ -55,14 +77,21 @@ function EditPage() {
 	}
 	//let carrinho: JSX.Element[] = pedido.carrinho.length ? pedido.carrinho.map((p) => <CompPizza key={p.idItem} pizza={pizzascarrinho[p]} qtd={p.qtd} adicionavel={false} removivel={true} />) : [<p>{'nenhuma pizza no carrinho'}</p>]
 
-	function updateCliente() {
+	async function updateCliente() {
+		let novoNome = (document.getElementById('nomeCliente') as HTMLInputElement).value
 		if (criacao) {
-			//chama funcao
-			<Link to={`/editPage/${pedido.idPedido}`}>Edit</Link>
+			let novoPedido: Pedido = {
+				idPedido: null,
+				nomeCliente: novoNome,
+				preco: null,
+				carrinho: null,
+			}
+
+			await criar(novoPedido)
 		}
 		else {
-			let novoPedido: Pedido = {...pedido}
-			novoPedido.nomeCliente = (document.getElementById('botaoNome') as HTMLInputElement).value
+			let novoPedido: Pedido = { ...pedido }
+			novoPedido.nomeCliente = novoNome
 			alterar(novoPedido)
 		}
 	}
@@ -71,20 +100,23 @@ function EditPage() {
 		<>
 			<Navbar />
 			<section className="formPedido">
-				<input type="text" defaultValue={pedido.nomeCliente} />
-				<button id='botaoNome' onClick={updateCliente}>Salvar</button>
+				<input id='nomeCliente' type="text" defaultValue={pedido.nomeCliente} />
+				<span className="preco">R${pedido.preco}</span>
+				<button onClick={updateCliente}>Salvar</button>
 				<div>
 					<h3>Zippas no carrinho:</h3>
 					{carrinho}
 				</div>
 			</section>
-			{criacao ? <></> : <>
-				<hr />
-				<h2>Adicionar Zippas:</h2>
-				{pizzas}
-			</>}
+			<hr />
+			<h2>Adicionar Zippas:</h2>
+			{pizzas}
 		</>
 	);
 }
 
 export default EditPage;
+function useNavigate() {
+	throw new Error("Function not implemented.");
+}
+

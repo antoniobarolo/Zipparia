@@ -20,11 +20,10 @@ class Pedido {
     }
     static async criar(p) {
         let erro;
-        if ((erro = Pedido.validar(p)))
-            return erro;
+        let novopedido;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("insert into Pedido (nomeCliente, preco) values (?,?)", [p.nomeCliente, p.preco]);
+                novopedido = await sql.query("insert into Pedido (nomeCliente, preco) values (?,0.00)", [p.nomeCliente]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")
@@ -33,15 +32,13 @@ class Pedido {
                     throw e;
             }
         });
-        return erro;
+        return (novopedido && novopedido[0]) || null;
     }
     static async alterar(p) {
         let erro;
-        if ((erro = Pedido.validar(p)))
-            return erro;
         await app.sql.connect(async (sql) => {
             try {
-                await sql.query("update Pedido set nomeCliente = ? and set preco = ? ", [p.nomeCliente, p.preco]);
+                await sql.query("update Pedido set nomeCliente = ?, preco = ? where idPedido = ?", [p.nomeCliente, p.preco, p.idPedido]);
             }
             catch (e) {
                 if (e.cod && e.code === "ER_DUP_ENTRY")

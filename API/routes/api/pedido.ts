@@ -43,12 +43,12 @@ class PedidoApiRoute {
 
       let pedido = req.body as Pedido;
 
-      erro = await Pedido.criar(pedido);
+      let novopedido = await Pedido.criar(pedido);
 
       if(erro){
           res.status(400).json(erro);
       }else{
-          res.json(true);
+          res.json(novopedido);
       }
   }
 

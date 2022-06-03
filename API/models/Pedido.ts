@@ -32,13 +32,12 @@ class Pedido{
     return (lista && lista[0]) || null;
   }
 
-  public static async criar(p: Pedido): Promise<string> {
+  public static async criar(p: Pedido): Promise<Pedido> {
     let erro: string;
-    if((erro = Pedido.validar(p))) return erro;
-
+    let novopedido: Pedido[]
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("insert into Pedido (nomeCliente, preco) values (?,?)", [p.nomeCliente,p.preco]);
+        novopedido = await sql.query("insert into Pedido (nomeCliente, preco) values (?,0.00)", [p.nomeCliente]) as Pedido[];
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `A Pedido ${p.idPedido} já existe`;
@@ -46,16 +45,15 @@ class Pedido{
       }
     });
 
-    return erro;
+    return (novopedido && novopedido[0]) || null;
   }
 
   public static async alterar(p: Pedido): Promise<string> {
     let erro: string;
-    if((erro = Pedido.validar(p))) return erro;
 
     await app.sql.connect(async (sql: app.Sql) => {
       try {
-        await sql.query("update Pedido set nomeCliente = ? and set preco = ? ", [p.nomeCliente,p.preco]);
+        await sql.query("update Pedido set nomeCliente = ?, preco = ? where idPedido = ?", [p.nomeCliente,p.preco, p.idPedido]);
       } catch (e) {
         if (e.cod && e.code === "ER_DUP_ENTRY")
         erro = `O Pedido ${p.idPedido} já existe`;

@@ -58,16 +58,22 @@ INSERT INTO Pizza.Pedido(nomeCliente,preco)
 VALUES('Aziz ab Sobral',0);
   
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES ('Pizza ruim','Ela é muito boaaa',10.90);
+VALUES ('Pizza ruim','Ela é muito boaaa',10);
   
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES('Zippa de .zip','Sabor comprimido',18.90);
+VALUES('Zippa de .zip','Sabor comprimido',18);
 
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES('Zippa de PEDRA','Sabor indescritível, nada perdoa',20.50);
+VALUES('Zippa de PEDRA','Sabor indescritível, nada perdoa',20);
 
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES('Zippa de Amor','Não existe amor em SP, mas na ZP existe',9.99);
+VALUES('Zippa de Amor','Não existe amor em SP, mas na ZP existe',8);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zippa do Gaspar','Girempoca da parafuseta',15);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zippa do Baloiro','É a pizza do leonardo',10);
   
 INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
 VALUES (1,1,3);

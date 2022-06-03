@@ -20,7 +20,7 @@ export async function obterPedido(id: number): Promise<Pedido> {
     }
 }
 
-export async function criar(p:Pedido) {
+export async function criar(p:Pedido): Promise<Pedido> {
     try {
         let resposta = await fetch("http://localhost:3000/api/pedido/criar", {
             headers: {
@@ -31,15 +31,15 @@ export async function criar(p:Pedido) {
         });
 
         if (await resposta.ok) {
-            listarPedido();
             alert("Deu Certo")
         }
+        
+        return resposta.json()
 
     } catch (motivoDoErro) {
         alert("Algo saiu errado" + motivoDoErro);
 
     }
-
 }
 
 export async function alterar(p:Pedido) {
