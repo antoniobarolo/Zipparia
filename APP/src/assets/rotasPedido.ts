@@ -31,7 +31,7 @@ export async function criar(p:Pedido): Promise<Pedido> {
         });
 
         if (await resposta.ok) {
-            alert("Deu Certo")
+            
         }
         
         return resposta.json()
@@ -54,7 +54,7 @@ export async function alterar(p:Pedido) {
         });
 
         if (await resposta.ok) {
-            alert("Deu Certo")
+            
         }
 
     } catch (motivoDoErro) {
@@ -72,7 +72,7 @@ export async function criarPizzaPedido(idPedido: number, idPizza: number, qtd: n
         if (await resposta.ok) {
 
             listarPedido()
-            alert("Deu Certo")
+            
         }
         else{
             alert('Não poe a mesma pizza não parceiro, põe pelas abas de cima pf🐱‍👤')
@@ -92,7 +92,7 @@ debugger
         if (await resposta.ok) {
 
             listarPedido()
-            alert("Deu Certo")
+            
         }
     }
     catch (motivoDoErro) {
@@ -109,7 +109,7 @@ export async function excluirPizzaPedido(idPedido: number, idPizza: number) {
         if (await resposta.ok) {
 
             listarPedido()
-            alert("Deu Certo")
+            
         }
     }
     catch (motivoDoErro) {
@@ -126,7 +126,7 @@ export async function excluir(idPedido: number) {
         if (await resposta.ok) {
 
             listarPedido()
-            alert("Deu Certo")
+            
         }
     }
     catch (motivoDoErro) {

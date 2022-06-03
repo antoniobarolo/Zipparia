@@ -18,7 +18,7 @@ function EditPage() {
 	if (criacao) {
 		return (<>
 			<Navbar />
-			<section className="formPedido">
+			<section className="formPedidoC">
 				<h3>Informe o nome que será registrado no pedido:</h3>
 				<input id='nomeCliente' type="text" />
 				<button onClick={updateCliente}>➕</button>

@@ -145,6 +145,12 @@ span{
 	margin-left: 3%;
 }
 
+.formPedidoC{
+	margin: 0 auto;
+	padding: 30px;
+	text-align: center;
+}
+
 .formPedido input{
 	height: 30px;
 	width: 30%;
