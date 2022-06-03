@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { excluirPizzaPedido, alterarPizzaPedido, criarPizzaPedido, alterar } from "../assets/rotasPedido";
-import Item from "../models/item";
 import Pedido from "../models/pedido";
 import Pizza from "../models/pizza";
-import Pedidos from "../pedidos";
 
 interface PizzaProps {
 	pizza: Pizza
@@ -58,12 +56,12 @@ function CompPizza(props: PizzaProps) {
 
 			{props.adicionavel ? <>
 				<input type="number" id={`qtdAdd${props.pizza.idPizza}`} defaultValue={1} min="1" />
-				<button onClick={() => addPizza(parseInputValue(`qtdAdd${props.pizza.idPizza}`))}>+</button>
+				<button onClick={() => addPizza(parseInputValue(`qtdAdd${props.pizza.idPizza}`))}>➕</button>
 			</> : <></>}
 
 			{props.removivel ? <>
 				<input type="number" id={`qtdDelete${props.pizza.idPizza}`} defaultValue={props.qtd} min="0" />
-				<button onClick={() => editPizza(parseInputValue(`qtdDelete${props.pizza.idPizza}`))}>Alterar</button>
+				<button onClick={() => editPizza(parseInputValue(`qtdDelete${props.pizza.idPizza}`))}>📝</button>
 			</> : <></>}
 
 		</div>

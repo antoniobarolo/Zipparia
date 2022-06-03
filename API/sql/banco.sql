@@ -43,19 +43,19 @@ CREATE TABLE IF NOT EXISTS `Pizza`.`Item` (
     ON UPDATE NO ACTION, CONSTRAINT `unique_Pizza` unique(`idPedido`, `idPizza`));
 
 INSERT INTO Pizza.Pedido(nomeCliente, preco)
-VALUES ('Jorge da Capadócia',0);
+VALUES ('Jorge da Capadócia',66);
   
 INSERT INTO Pizza.Pedido(nomeCliente,preco)
-VALUES('Jimmy Neutron',0);
+VALUES('Jimmy Neutron',78);
 
 INSERT INTO Pizza.Pedido(nomeCliente,preco)
-VALUES('Sandra Punjab',0);
+VALUES('Sandra Punjab',26);
 
 INSERT INTO Pizza.Pedido(nomeCliente,preco)
-VALUES('Acererak Souza',0);
+VALUES('Acererak Souza',100);
 
 INSERT INTO Pizza.Pedido(nomeCliente,preco)
-VALUES('Aziz ab Sobral',0);
+VALUES('Aziz ab Sobral',100);
   
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
 VALUES ('Pizza ruim','Ela é muito boaaa',10);
@@ -73,8 +73,23 @@ INSERT INTO Pizza.Pizza(nome,descricao,preco)
 VALUES('Zippa do Gaspar','Girempoca da parafuseta',15);
 
 INSERT INTO Pizza.Pizza(nome,descricao,preco)
-VALUES('Zippa do Baloiro','É a pizza do leonardo',10);
+VALUES('Zippa do Baloiro','Na verdade é a pizza do Leonardo',10);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Tarsila Mazzippa de Souza','Não traga faca senão ela que te cortará',6.66);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zipparana','Receita preparada especialmente pela Blanka',22);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zippa de Bíscaro','Para os Bustamantes de Zippa boa',28);
+
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zippajima','Perfeito para acompanhar um café filosófico',25);
   
+INSERT INTO Pizza.Pizza(nome,descricao,preco)
+VALUES('Zippa mistério','Não peça pf!',2);
+
 INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
 VALUES (1,1,3);
 
@@ -95,6 +110,9 @@ VALUES (3,2,1);
 
 INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
 VALUES (3,4,1);
+
+INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
+VALUES (4,10,4);
 
 INSERT INTO Pizza.Item(idPedido,idPizza,qtd)
 VALUES (5,3,5);

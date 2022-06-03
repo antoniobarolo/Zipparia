@@ -1,8 +1,7 @@
 import React from "react";
 import Pedido from "../models/pedido";
 import { Link } from "react-router-dom";
-import {alterar, excluir} from '../assets/rotasPedido'
-import Pedidos from '../pedidos'
+import {excluir} from '../assets/rotasPedido'
 
 interface CompPedidoProps {
     pedido: Pedido
@@ -20,8 +19,8 @@ function CompPedidos(props: CompPedidoProps) {
             <div className="pedidoCabecalho">
                 <h3>{props.pedido.nomeCliente}</h3> <span className="preco">Preço total: R${props.pedido.preco}</span>
             </div>
-            <button className='botaoPedido'> <Link to={`/editPage/${props.pedido.idPedido}`}>Edit</Link></button>
-            <button className='botaoPedido' onClick={deletePedido}>x</button>
+            <button className='botaoPedido'> <Link className="noLine" to={`/editPage/${props.pedido.idPedido}`}>📝</Link></button>
+            <button onClick={deletePedido}>❌</button>
         </div>
     );
 

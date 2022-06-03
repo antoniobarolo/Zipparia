@@ -59,16 +59,21 @@ button{
 	font-family: 'Press Start 2P', cursive;
 	font-size: 14px;
 	text-align: center;	
+	text-decoration: none;
+}
 
+Link, .noLine{
+	text-decoration: none;
 }
 
 a{
 	color: azure;
 }
 
-button:hover, a:active {
+button:hover, a:hover {
 	color: #131212; 
 	background-color: rgb(187, 234, 248);
+	text-decoration: none;
   }
 
 .erro{
@@ -124,6 +129,49 @@ span{
 }
 
 .botaoPedido{
-	margin-left: 50%;
-	
+	margin-left:15%;
+	text-decoration: none;
 	}
+
+.linkNav{
+	text-decoration: none;
+	padding: 0px 10vw 0px 10vw;
+	display: inline;
+}
+
+.formPedido{
+	margin: 0 auto;
+	padding: 30px;
+	margin-left: 3%;
+}
+
+.formPedido input{
+	height: 30px;
+	width: 30%;
+	margin: 0 5vw 0 5vw;
+}
+
+.carrinhoTitulo{
+	padding-left: 10%;
+}
+
+.pedidosTitulo {
+	display: flex;
+	align-items: center;
+	
+}
+
+.pedidosTitulo h2{
+	width: 1vw;
+}
+
+.pedidosTitulo button{
+	margin-bottom: 3vh;
+}
+
+.carrinhoLista{
+	border: white;
+	border-radius: 5px;
+	border-style: solid;
+	margin: 0 40% 1% 10%;
+}

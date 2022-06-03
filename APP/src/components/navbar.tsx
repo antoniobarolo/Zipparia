@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -6,8 +6,8 @@ function Navbar() {
         <nav>
             <h1>Zipparia</h1>
             <ul>
-                <Link to="/home">Zippas</Link>
-                <Link to="/pedidos">Pedidos</Link>
+                <Link className="linkNav" to="/home">Zippas</Link>
+                <Link className="linkNav" to="/pedidos">Pedidos</Link>
             </ul>
         </nav>
     );

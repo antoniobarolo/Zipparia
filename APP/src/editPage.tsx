@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CompPizza from "./components/compPizza";
 import Navbar from "./components/navbar";
 import listarPizza from "./assets/rotasPizza";
 import { criar, alterar, obterPedido } from "./assets/rotasPedido";
 import Pedido from "./models/pedido";
 import Pizza from "./models/pizza";
-import { propTypes } from "react-bootstrap/esm/Image";
-import Pedidos from "./pedidos";
 
 function EditPage() {
 	const params = useParams();
@@ -21,8 +19,9 @@ function EditPage() {
 		return (<>
 			<Navbar />
 			<section className="formPedido">
+				<h3>Informe o nome que será registrado no pedido:</h3>
 				<input id='nomeCliente' type="text" />
-				<button onClick={updateCliente}>Criar</button>
+				<button onClick={updateCliente}>➕</button>
 			</section>
 		</>)
 	}
@@ -102,21 +101,19 @@ function EditPage() {
 			<section className="formPedido">
 				<input id='nomeCliente' type="text" defaultValue={pedido.nomeCliente} />
 				<span className="preco">R${pedido.preco}</span>
-				<button onClick={updateCliente}>Salvar</button>
-				<div>
-					<h3>Zippas no carrinho:</h3>
+				<button onClick={updateCliente}>📝</button>
+			</section>
+			<div className="carrinho">
+				<h3 className="carrinhoTitulo">Zippas no carrinho:</h3>
+				<div className="carrinhoLista">
 					{carrinho}
 				</div>
-			</section>
+			</div>
 			<hr />
-			<h2>Adicionar Zippas:</h2>
-			{pizzas}
+				<h2>Adicionar Zippas:</h2>
+				{pizzas}
 		</>
 	);
 }
 
 export default EditPage;
-function useNavigate() {
-	throw new Error("Function not implemented.");
-}
-

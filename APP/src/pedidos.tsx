@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/navbar";
 import CompPedidos from "./components/compPedido";
-import { listarPedido, obterPedido } from "./assets/rotasPedido";
+import { listarPedido} from "./assets/rotasPedido";
 import Pedido from "./models/pedido";
 import { Link } from "react-router-dom";
 
@@ -28,8 +28,10 @@ function Pedidos() {
 	return (
 		<>
 			<Navbar />
-			<h2>Pedidos:</h2>
-			<button className="botaoPedido"><Link to={"/editPage/create/"}>+</Link></button>
+			<div className="pedidosTitulo">
+				<h2>Pedidos:</h2>
+				<button><Link className="noLine" to={"/editPage/create/"}>➕</Link></button>
+			</div>
 			{pedidos}
 		</>
 	);
