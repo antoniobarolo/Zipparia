@@ -56,11 +56,13 @@ function EditPage() {
 	//let carrinho: JSX.Element[] = pedido.carrinho.length ? pedido.carrinho.map((p) => <CompPizza key={p.idItem} pizza={pizzascarrinho[p]} qtd={p.qtd} adicionavel={false} removivel={true} />) : [<p>{'nenhuma pizza no carrinho'}</p>]
 
 	function updateCliente() {
-		if(criacao){
-
+		if (criacao) {
+			//chama funcao
+			<Link to={`/editPage/${pedido.idPedido}`}>Edit</Link>
 		}
-		else
-		parseInt((document.getElementById('botaoNome') as HTMLInputElement).value)
+		else {
+			parseInt((document.getElementById('botaoNome') as HTMLInputElement).value)
+		}
 	}
 
 	return (

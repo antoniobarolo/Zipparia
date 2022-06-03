@@ -15,14 +15,12 @@ function CompPedidos(props: CompPedidoProps) {
         window.location.reload()
     }
 
-    const editLink = ("/editPage/" + (props.pedido.idPedido).toString()).toString()
-
     return (
         <div>
             <div className="pedidoCabecalho">
                 <h3>{props.pedido.nomeCliente}</h3> <span className="preco">Preço total: R${props.pedido.preco}0</span>
             </div>
-            <button className='botaoPedido'> <Link to={editLink}>Edit</Link></button>
+            <button className='botaoPedido'> <Link to={`/editPage/${props.pedido.idPedido}`}>Edit</Link></button>
             <button className='botaoPedido' onClick={deletePedido}>x</button>
         </div>
     );
