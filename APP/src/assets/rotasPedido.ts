@@ -20,23 +20,40 @@ export async function obterPedido(id: number): Promise<Pedido> {
     }
 }
 
-export async function criar() {
+export async function criar(p:Pedido) {
     try {
-        const formData = new FormData(document.querySelector('form'))
-        var pedido = {};
-        formData.forEach((value, key) => pedido[key] = value);
-        console.log(JSON.stringify(pedido))
-
         let resposta = await fetch("http://localhost:3000/api/pedido/criar", {
             headers: {
                 "Content-Type": "application/json",
             },
             method: "POST",
-            body: JSON.stringify(pedido),
+            body: JSON.stringify(p),
         });
 
         if (await resposta.ok) {
             listarPedido();
+            alert("Deu Certo")
+        }
+
+    } catch (motivoDoErro) {
+        alert("Algo saiu errado" + motivoDoErro);
+
+    }
+
+}
+
+export async function alterar(p:Pedido) {
+    try {
+
+        let resposta = await fetch("http://localhost:3000/api/pedido/alterar", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(p),
+        });
+
+        if (await resposta.ok) {
             alert("Deu Certo")
         }
 

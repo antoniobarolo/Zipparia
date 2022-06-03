@@ -52,6 +52,21 @@ class PedidoApiRoute {
       }
   }
 
+  @app.http.post()
+  public async alterar(req: app.Request, res: app.Response) {
+      let erro: string = null;
+
+      let pedido = req.body as Pedido;
+
+      erro = await Pedido.alterar(pedido);
+
+      if(erro){
+          res.status(400).json(erro);
+      }else{
+          res.json(true);
+      }
+  }
+
   @app.route.methodName("/criarPizzaNoPedido/:idPedido/:idPizza/:qtd")
   public async criarPizzaNoPedido(req: app.Request, res: app.Response) {
       let erro: string = null;
